@@ -1,0 +1,13 @@
+---
+title: "README"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "August 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# BST 650 Course GitHub Directory
+This directory is where I will store all of my course content for the fall 2018 and spring 2019 sessions of BST 650.

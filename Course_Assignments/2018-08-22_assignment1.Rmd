@@ -1,0 +1,20 @@
+---
+title: 'R Assignment 1: Connecting R to GitHub'
+author: "Gabriel J. Odom, PhD, ThD"
+date: "August 22, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 1: Due Sunday, 26 August at 23:59PM
+Read the **RStudio and GitHub** notes in the `Literature/` directory. As you follow along with these notes (and work as you go), you will perform the following:
+
+1. Create a `GitHub/` directory on your computer's hard disk (*not on a synced drive*).
+2. Follow **Section 4.1** of the above document to create a subdirectory of `GitHub/` titled `BST650_introR/` (or something similar).
+3. Add plain text file with your name and the date called `test.txt` to this directory.
+4. Follow the steps of **Section 4.2.2 - 4.2.6** to *commit* this file to Git, and *push* the commit to GitHub.
+
+I am quite aware that this process may be painful at first. If (or when) you get stuck, please come by my office. Because this assignment is critical for the rest of the class, *please*, *please*, *please* come get help if you get stuck. Also, there are some great resources in **Section 1** of that document if you get stuck and can't come see me.

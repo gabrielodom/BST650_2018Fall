@@ -128,3 +128,29 @@ seq(from = 0, to = 1, length.out = 5)
 # Another ugly piece of that for loop is the initialization setup. There must
 #   be a better way to create a vector of four zeros. There is:
 rep(0, 4)
+# We can also perform a "replicate each" via
+rep(1:5, each = 3)
+# Finally, we can create an repeating cycle of a certain length with
+rep(-1:1, length.out = 6)
+
+
+###  Exercises  ###
+# 1. Five people start the newest diet craze. Their weights (in kg) before and
+#    after were [78 72 78 79 105] and [67 65 79 70 93], respectively. Store
+#    these two vectors as "wtBefore" and "wtAfter", respectively. Find the total
+#    weight lost, the average weight lost, and the weight lost per person.
+# 2. Create the following vectors using the rep() and seq() functions:
+#    a) the first non-negative integer powers of 2
+#    b) 1, 1.5, 2, 2.5, ..., 12
+#    c) 1, 8, 27, 64, ..., 1000
+#    d) 1, -1/2, 1/3, -1/4, ..., -1/100
+#    e) 1, 0, 3, 0, 5, 0, 7, 0, ..., 0, 49
+#    f) 1, 3, 6, 10, 15, ..., 210 (Hint: ?cumsum)
+#    g) 1, 2, 2, 3, 3, 3, ..., 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 (Hint: ?rep)
+# 3. (ADVANCED) The jth term of the Taylor-MacLaurin series for the natural
+#    logarithm is 
+#    $$
+#    log(1 - x) := - \lim_{n \to \infty} \sum \limits_{j = 1}^n \frac{x ^ j}{j}.
+#    $$
+#    Find the residuals of this approximation for n = 5, 10, 50, 100 around x =
+#    0.25

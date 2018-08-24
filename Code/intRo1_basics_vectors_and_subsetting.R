@@ -9,6 +9,8 @@
 
 ######  Basics  ###############################################################
 # Before we dive in, you can access help for most R commands via the ? symbol.
+#   Further note that R is cAsE sEnSiTiVe: this means that y and Y are not the
+#   same thing.
 
 # In R, Most code is written within a script. This is basically a text file
 #   (saved with the extension ".R") that contains the code you want to run, in
@@ -63,6 +65,7 @@ x
 #    Alpha. How many days off was your estimate?
 # 3. Using the object "myAge", find your decimal age. Hint: the division
 #    operator is "/".
+# 4. Copy and Paste MyAge into the console and press ENTER. What happens? Why?
 
 
 
@@ -154,3 +157,96 @@ rep(-1:1, length.out = 6)
 #    $$
 #    Find the residuals of this approximation for n = 5, 10, 50, 100 around x =
 #    0.25
+
+
+
+######  Subsetting Vectors  ###################################################
+# We can use subsetting functions to extract individual components of a vector.
+#   There are three main methods to subset an *atomic* vector (this is just a
+#   fancy way of saying a basic vector). Let's first create a vector of the
+#   months we were born in:
+birthMonths <- c("March", "May", "June", "January")
+# First, notice that we can add English words to a vector by putting each entry
+#   in quotes.
+
+
+###  Subset by Position  ###
+# Now, lets extract the month stored in the first element of the vector:
+birthMonths[1]
+#   If you learned programming in another language, this may surprise you. Some
+#   languages start with the first element having index 0, not 1.
+# Now let's extract the second and fourth elements (remember that we have to use
+#   the c() function to create a vector):
+birthMonths[c(2, 4)]
+# What if we want the last element of a very long vector? We can use the
+#   function "length()" to find out how many elements are in a vector:
+length(birthMonths)
+# Now that we know how long the vector is, we can subset the vector by its
+#   length to extract the last element
+birthMonths[length(birthMonths)]
+
+
+###  Negation Subsetting  ###
+# Just as how we could tell R which elements of the vector we wanted, it might
+#   be easier to tell R which elements of the vector we *don't* want. This uses
+#   "negative subsetting". Let's ask R to give us all of the birth months
+#   *except for* the second one:
+birthMonths[-2]
+# If we want to cut more than one element, we use the c() vector function to
+#   create a vector of the elements we don't want.
+birthMonths[-c(1, 2)]
+
+
+###  Basic Logic in R  ###
+# Before we dive in to logical subsetting, we first need to understand how R
+#   represents formal logic. The letters TRUE (all uppercase) is the R symbol
+#   that something is true. The letters FALSE (again, all uppercase) is the
+#   symbol that something is false. These words are reserved, meaning that you
+#   cannot use them for anything else, they must be spelled exactly, and as
+#   always CaSe MaTtErS (just like the rest of R).
+TRUE
+# Notice that the word changes colour to light blue in the script. This means
+#   that R sees this as a reserved word. Now type
+True
+#   R has no idea what you are talking about.
+# Some useful components when dealing with logic are the comparison functions.
+#   R has built-in ways to check for equality, inequality, and magnitude 
+#   differences. These all return either TRUE or FALSE. They are:
+1 == 3 # Is 1 equal to 3?
+1 != 3 # Is 1 not equal to 3?
+1 > 3  # Is 1 greater than 3? 
+1 <= 3 # Is 1 less than or equal to 3?
+# Notice that the last question had the word "or" in it. The logical OR and AND
+#   operators are | and &, respectively. We could re-write the last check as
+1 < 3 | 1 == 3
+
+
+###  Logical Subsetting  ###
+# Now that we understand a little of how logic works, let's use a logical vector
+#   (a vector with only TRUE or FALSE elements) to subset our character vector
+#   (the vector "birthMonths" is a *character* vector because it only contains
+#   elements in quotes). We want the first two birth months:
+birthMonths[c(TRUE, TRUE, FALSE, FALSE)]
+# What if we want to find which months are in the summer? We can use the logical
+#   "is an element of" operator, coded as "%in%". Here's an example:
+birthMonths %in% c("June", "July", "August")
+# Because this is such a useful topic, we will cover this in more detail next
+#   class.
+
+
+###  Exercises  ###
+# 1. Create a vector of the months of the year and store it in an object called
+#    "mons".
+# 2. You would like to discard the first three months, so you type "mons[-1:3]".
+#    What happened? Why should you type instead?
+# 3. Find a method to use the "length()" function to find the last four entries
+#    of *any* atomic vector. Apply this to find the last four months of the
+#    year.
+# 4. Logically subset the uppercase vector of English letters in the following
+#    ways:
+#    a) Type LETTERS and press ENTER. What is your guess to find the lower case
+#       letters?
+#    b) Create a vector of the first 12 upper-case English letters
+#    c) Create a vector of the 1st, 3rd, 5th, 7th, ..., 25th English letters
+#    d) Create a vector of the consonants. (Hint: it may be easier to find the
+#       letters that are *not* one of the vowels)

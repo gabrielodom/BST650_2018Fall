@@ -141,7 +141,8 @@ rep(-1:1, length.out = 6)
 # 1. Five people start the newest diet craze. Their weights (in kg) before and
 #    after were [78 72 78 79 105] and [67 65 79 70 93], respectively. Store
 #    these two vectors as "wtBefore" and "wtAfter", respectively. Find the total
-#    weight lost, the average weight lost, and the weight lost per person.
+#    weight lost, the average weight lost, and the weight lost per person. Hint:
+#    see the ?sum and ?mean functions.
 # 2. Create the following vectors using the rep() and seq() functions:
 #    a) the first non-negative integer powers of 2
 #    b) 1, 1.5, 2, 2.5, ..., 12

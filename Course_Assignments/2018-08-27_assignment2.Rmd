@@ -1,0 +1,19 @@
+---
+title: "R Assignment 2"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "August 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Assignment 2: Due Thursday, 30 August at 5:59PM
+1. Edit the `README.Rmd` file you created after last class to include a section called “Overview” at the top of the document (basically insert this section before the “R markdown” section. In this section, you will write a sentence or two about the contents of your BST650_introR project. Once you are done, knit, commit, then push the changes you have made to GitHub. You have probably already done this.
+
+2. In the BST650_2018Fall project (this project; the one you downloaded from my GitHub - you will have to “Pull” my new changes), you will find an R script in the code/ directory with the name `intRo1_basics_vectors_and_subsetting.R`. Open this script, read through it, and execute the code in each paragraph (you don’t have to do the exercises before Thursday - I know you won’t have time).
+
+3. Create a new Rmarkdown report (just like we created the `README.Rmd` file). In this report, delete all of the markdown code (from the “## R markdown” to the end). Copy the Exercises from the R script you read through in the last step into this new Rmarkdown file. Knit, commit, then push this to GitHub. You can do some of the exercises if you want a head start for next week, but they aren’t required yet.
+

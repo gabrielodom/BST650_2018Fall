@@ -1,0 +1,159 @@
+---
+title: "R Assignment 3"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "August 31, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Assignment 2: Due Sunday, 9 September at 23:59PM
+For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.
+
+1. Work the exercises in the R markdown document you created as your assignment for the August 30 class session (Assignment 2 part 2).
+2. Explore Discete Statistical Distributions. For each of the following discrete distributions, I will give you the population mean and variance. Given the population information for each distribution, you will algebraically infer the distributional parameters to the best of your ability for the respective distributions. Then, given the inferred parameters, you will generate and store samples of size 5, 15, 25, and 1000. Finally, you will calculate the sample mean and variance of each sample for each distribution. I will give an example of the negative binomial distribution first, and I'll type the math for the distributions (since you don't know LaTeX yet). You need to fill out the rest for each distribution.
+3. Explore Continuous Statistical Distributions. Repeat the above. Once again, sample with sizes 5, 15, 25, and 1000.
+
+Here is a link of the common statistical distributions in standard `R`: <https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Distributions.html>.
+
+
+</br>
+
+*******************************************************************************
+</br>
+
+
+## Discrete Probability Distributions
+### Negative Binomial Distribution
+The Negative Binomial distribution models the number failures before we have the requred number of successes necessary to stop a process. For example, we may want to know how many interview candidates we will reject before we find a good fit, or how many patients we exclude before we have enough subjects in a clinical trial. That is, if we are looking to enroll 5 subjects according to a criteria, how many patient records will we skip before we find the 5 we're looking for? For this distribution, the probablility mass function is
+\[
+NB(x|n,p) := {x + n - 1 \choose n - 1} (1 - p) ^ x p ^ n.
+\]
+
+#### Estimate the Distribution Parameters Algebraically
+From [Wikipedia](https://en.wikipedia.org/wiki/Negative_binomial_distribution), we have that the population mean of the negative binomial is $np/(1 - p)$, and the population variance is $np/(1 - p)^2$. I want to generate random samples from the
+negative binomial distribution with a sample mean of 5 and sample variance of 10. Therefore, I have the following system of non-linear equations:
+\[
+\frac{np}{1 - p} = 5;\quad\ \frac{np}{(1 - p) ^ 2} = 10.
+\]
+After substitution, we have the following equation:
+\[
+\begin{align}
+\frac{2np}{1 - p} &= \frac{np}{(1 - p) ^ 2} \\
+\Longrightarrow\qquad 2(1 - p) ^ 2 &= 1 - p \qquad\ p \in (0,1) \\
+\Longrightarrow\qquad\qquad\quad\ p &= 1/2.
+\end{align}
+\]
+Substituting $p = 1/2$ into the equation for the mean yields $n = 5$. Therefore, the negative binomial distribution parameters that yield a population mean and variance of 5 and 10, respectively, are $n = 5$ and $p = 0.5$. Now, you may be saying "I don't want to do all that algebra!" In that case, you can always [ask WolframAlpha](https://www.wolframalpha.com/input/?i=n+*+p+%2F+(1+-+p)+%3D+5;+n+*+p+%2F+(1+-+p)+%5E+2+%3D+10) for help.
+
+#### Generate Random Samples in `R`
+Now that we have the parameters to input, we can generate random samples of size 5, 15, 25, and 1000, and calculate their sample means and variances. We know the true mean and variance is 5 and 10, respectively, so we will see how close the sample estimates are as the sample size increases. I will use the `set.seed()` function to make the random sample reproducible (but you don't have to set a seed for this assignment).
+```{r n5}
+set.seed(123)
+# Sample Size of 5:
+xNB_n5 <- rnbinom(n = 5, size = 5, prob = 0.5)
+# If we enrolled 5 studies (the n = 5 argument), and were looking for 5 subjects
+#   in each study (the size = 5 argument), with each subject independently
+#   having a 50% chance of meeting the enrollment criteria (the prob = 0.5
+#   argument), we would reject
+xNB_n5
+#   subjects from each trial before we will have enrolled 5 subjects.
+
+# The average number of people we rejected before we enrolled five subjects in
+#   each trial is
+mean(xNB_n5)
+#   and the variability of the number of people we rejected is
+var(xNB_n5)
+```
+
+For this random sample, we see that that mean is much larger than we expected (7.8 instead of 5), and the variance is much smaller than we expected (2.2 instead of 10). In fact, if we performed a Student's $t$-test on these five observations, with corresponding significance of $p = 0.0135$, we would reject the claim that the population mean is 5! This is the danger of making statistical decisions using data sets with very small sample sizes (and from a skewed distribution).
+
+Now, we will increase the sample size from 5 to 15, 25, and 1000.
+```{r increaseN}
+# Sample Size of 15
+xNB_n15 <- rnbinom(n = 15, size = 5, prob = 0.5)
+xNB_n15
+mean(xNB_n15)
+var(xNB_n15)
+
+
+# Sample Size of 25
+xNB_n25 <- rnbinom(n = 25, size = 5, prob = 0.5)
+mean(xNB_n25)
+var(xNB_n25)
+
+
+# Sample Size of 100
+xNB_n1000 <- rnbinom(n = 1000, size = 5, prob = 0.5)
+mean(xNB_n1000)
+var(xNB_n1000)
+```
+
+
+### Binomial Distribution
+The probability mass function for the Binomial Distribution is 
+\[
+Bin(x|n,p) := {n \choose x} p ^ x (1 - p) ^ {n - x},
+\]
+where the population mean is $np$ and variance is $np(1 - p)$. Repeat the above process I applied to the Negative Binomial distribution, but with a population mean of 6 and variance of 2. Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 
+
+
+### Poisson Distribution
+The probability mass function for the Poisson Distribution is
+\[
+Pois(x|\lambda) := \frac{\lambda ^ x e ^ {\lambda}}{x!},
+\]
+where the population mean and variance are both equal to $\lambda$. Repeat the process I applied to the Negative Binomial distribution, but with a population mean of 3 (and variance of 3). Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 
+
+
+</br>
+
+*******************************************************************************
+</br>
+
+
+## Continuous Distributions
+There are many common continuous statistical distributions, but we will cover the four most used in statistical inference: the [Normal Distribution](https://en.wikipedia.org/wiki/Normal_distribution), [Student's $t$ Distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution), [Chi Square Distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution), and the [$F$-Distribution](https://en.wikipedia.org/wiki/F-distribution).
+
+
+### Normal Distribution
+The probability density function for the Normal Distribution is
+\[
+N(x|\mu, \sigma) := \frac{1}{\sqrt{2 \pi \sigma ^ 2}} e ^ {-\left(\frac{(x - \mu) ^ 2}{2 \sigma ^ 2}\right)},
+\]
+with mean $\mu$ and variance $\sigma ^ 2$. Repeat the process I applied to the Negative Binomial distribution, but with a population mean of 2 and variance of 5. Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 
+
+
+### Student's $t$ Distribution
+The probability density function for the Student's $t$ Distribution is
+\[
+t_{\nu}(x) := \frac{\Gamma\left(\frac{\nu + 1}{2}\right)}{\sqrt{\nu \pi} \Gamma\left(\frac{\nu}{2}\right)} \left(1 + \frac{x ^ 2}{\nu}\right) ^ {-\left(\frac{\nu + 1}{2}\right)},
+\]
+with mean identically $0$ and variance $\nu / (\nu - 2)$. This and other distributions make use of the $\Gamma$ function (read: "Gamma"); this function is defined as
+\[
+\Gamma(n) := (n - 1)!,\ n \in \mathbb{N},
+\]
+where $\mathbb{N}$ is the set of counting numbers and $!$ is the [factorial operator](https://en.wikipedia.org/wiki/Factorial) (the $\Gamma$ function is technically defined for all complex numbers with a positive real component, but that's a conversation for your mathematical statistics class). Repeat the process I applied to the Negative Binomial distribution, but with a population variance of 2. Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 
+
+
+### $\chi ^ 2$ Distribution
+The probability density function for the $\chi ^ 2$ Distribution (also typeset as the Chi-Squared Distribution) is
+\[
+\chi ^ 2 _{\nu}(x) := \frac{2 ^ {-\frac{\nu}{2}}}{\Gamma\left(\frac{\nu}{2}\right)} e ^ {-\frac{x}{2}} x ^ {\frac{\nu}{2} - 1},
+\]
+with mean $\nu$ and variance $2 \nu$. Repeat the process I applied to the Negative Binomial distribution, but with a population mean of 2 (and thus a variance of 4). Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 
+
+
+### $F$-Distribution
+The probability density function for the $F$-Distribution is
+\[
+F(x|n,m) := \frac{\Gamma\left(\frac{n + m}{2}\right) \sqrt{n ^ n m ^ m}}{\Gamma\left(\frac{n}{2}\right) \Gamma\left(\frac{m}{2}\right)} \sqrt{\frac{x ^ {n - 2}}{(nx + m) ^ {n + m}}},
+\]
+with mean $m / (m - 2)$ and variance
+\[
+\frac{2m ^ 2 (n + m - 2)}{n (m - 2) ^ 2 (m - 4)},\ m > 4.
+\]
+Repeat the process I applied to the Negative Binomial distribution, but with a population mean of 1.2 and variance of 0.4. Generate samples of sizes 5, 15, 25, and 1000 from such a distribution, and calculate their sample means and variances. 

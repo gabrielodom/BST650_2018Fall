@@ -1,0 +1,72 @@
+---
+title: "Statistical Distributions"
+author: "Gabriel Odom"
+date: "8/30/2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Random variables in `R` are shown on https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Distributions.html
+
+# Discrete Random Variables
+
+## Distributions
+We have a few common examples of discrete random variables. Each distribution also has a corresponding implementation in `R`.
+1. The Bernoulli Distribution: <https://en.wikipedia.org/wiki/Bernoulli_distribution>
+```{r}
+# Random Bernoulli with a fair coin
+rbinom(n = 1, size = 1, prob = 0.5)
+
+# Weighted coin
+rbinom(n = 1, size = 1, prob = 0.75)
+```
+
+2. Binomial Distribution: <https://en.wikipedia.org/wiki/Binomial_distribution>
+```{r}
+# Flip 10 fair coins and record the results
+rbinom(n = 10, size = 1, prob = 0.5)
+
+# Flip 10 fair coins and record the number of successes
+rbinom(n = 1, size = 10, prob = 0.5)
+```
+
+3. Poisson Distribution: <https://en.wikipedia.org/wiki/Poisson_distribution>
+```{r}
+# How many horse kicks in each group of 10 soldiers? We expect 2 kicks
+rpois(n = 10, lambda = 2)
+
+# Now the horses are angry...
+rpois(n = 10, lambda = 4)
+```
+
+## Moments of these Distributions
+The common moments we would care about are the *first* and *second* moments, from which we calculate the mean and variance, respectively.
+
+### Binomial
+```{r}
+# Random draw of five fair coins
+xBinom <- rbinom(n = 5, size = 1, prob = 0.5)
+xBinom
+
+# mean
+mean(xBinom)
+
+# variance
+var(xBinom)
+
+
+# Random draw of 100 fair coins
+xBinom2 <- rbinom(n = 100, size = 1, prob = 0.5)
+
+# mean
+mean(xBinom2)
+
+# variance
+var(xBinom2)
+```
+
+
+# Continuous Random Variables

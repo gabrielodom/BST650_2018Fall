@@ -1,0 +1,32 @@
+---
+title: "R Assignment 4"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "August 31, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Assignment 4: Due Sunday, 16 September at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+For each the seven statistical distributions we covered in the last assignment (Normal, Student's $t$, $\chi ^ 2$, $F$, Binomial, Negative Binomial, and Poisson), 
+
+1. Generate and store a random vector of 10,000 observations, using the same parameters as the last homework:
+    i. $N(\mu = 2, \sigma ^ 2 = 5 )$,
+    ii. $t_{\nu = 4}$,
+    iii. $\chi^2_{\nu = 2}$,
+    iv. $F_{n = 90,\ m = 12}$,
+    v. $Bin(n = 9, p = 2/3)$,
+    vi. $NBin(n = 5, p = 1/2)$, and
+    vii. $Pois(\lambda = 3)$.
+2. Subset the first $N = 6$ values from the vector, and of this subset
+    i. calculate the 5-Number Summary,
+    ii. plot the histogram of the subset, and
+    iii. plot the estimated density of this subset.
+3. Repeat Item 2 for the first $N =  10,\ 20,\ 30,\ \text{and}\ 50$ values from the random vector you generated in Item 1. Remark on the changing behaviour as the sample size increases. 
+4. Repeat Item 2 for the entire vector ($N = 10000$). For smaller values of $N$ from continuous distributions, which tool do you think gave a better representation of the full data: histogram or density plot? Did this change when you inspected the discrete distributions?
+5. Contrast the 5-Number Summaries at each of the sample sizes (6, 10, 20, 30, 50, and 10000) for the skewed distributions vs. the symmetric distributions.

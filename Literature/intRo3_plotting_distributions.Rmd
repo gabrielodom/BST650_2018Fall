@@ -1,0 +1,134 @@
+---
+title: "Plotting Distributions"
+author: "Gabriel Odom"
+date: "8/30/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Random variables in `R` are shown on https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Distributions.html
+
+There are two functions we will use: `hist()` and `plot(density())`. There is another function, `summary()` which will give us the mean and 5-number summary of a numeric vector.
+
+
+# Continuous Random Variables
+
+## The Normal Distribution
+
+### Sample Size of 10000
+```{r}
+# Draw Random Sample: sqrt(5) ~= 2.24
+xFullN <- rnorm(10000, mean = 2, sd = sqrt(5))
+
+# Histogram
+hist(xFullN)
+
+# Summary
+summary(xFullN)
+var(xFullN)
+
+# Density Plots
+density(xFullN)
+plot(density(xFullN))
+
+# Scatterplots
+plot(xFullN)
+```
+
+### Sample Size of 5
+```{r}
+
+# Histogram
+hist(xFullN[1:5])
+
+# Summary
+summary(xFullN[1:5])
+var(xFullN[1:5])
+
+# Density Plots
+density(xFullN[1:5])
+plot(density(xFullN[1:5]))
+```
+
+### Sample Size of 15
+```{r}
+# Histogram
+hist(xFullN[1:15])
+
+# Summary
+summary(xFullN[1:15])
+var(xFullN[1:15])
+
+# Density Plots
+plot(density(xFullN[1:15]))
+```
+
+### Sample Size of 25
+```{r}
+# Histogram
+hist(xFullN[1:25])
+
+# Summary
+summary(xFullN[1:25])
+var(xFullN[1:25])
+
+# Density Plots
+plot(density(xFullN[1:25]))
+```
+
+### Sample Size of 50
+```{r}
+# Histogram
+hist(xFullN[1:50])
+
+# Summary
+summary(xFullN[1:50])
+var(xFullN[1:50])
+
+# Density Plots
+plot(density(xFullN[1:50]))
+```
+
+
+## The Student's $t$ Distribution
+
+### Sample Size of 10000
+```{r}
+# Draw Random Sample: sqrt(5) ~= 2.24
+xFullSt <- rt(n = 10000, df = 4)
+
+# Histogram
+hist(xFullSt)
+
+# Summary
+summary(xFullSt)
+var(xFullSt)
+
+# Density Plots
+plot(density(xFullSt))
+
+# Scatterplot
+plot(xFullSt)
+```
+
+
+## The $\chi ^ 2$ Distribution
+
+
+## The $F$ Distribution
+
+
+
+# Discrete Distributions
+
+## The Binomial Distribution
+
+
+## The Negative Binomial Distribution
+
+
+## The Poisson Distribution
+

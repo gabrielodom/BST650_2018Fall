@@ -1,0 +1,117 @@
+---
+title: 'The Advanced Vector: A List'
+author: "Gabriel Odom"
+date: "9/17/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+On the class schedule, we are supposed to cover logical operators, character vectors, and matrices, but I believe that covering advanced vectors today--then matrices and data frames next week--makes more sense.
+
+# Overview
+This lesson will cover three new functions: `class`, `list`, and `str`. We will also talk about naming vectors.
+
+
+
+# Atomic Vectors
+In our previous sessions, we have talked about *atomic* vectors without ever defining them. **Atomic vectors are vectors such that each element in the vector shares a common type / `class`.**
+
+
+## Example User Record Vector
+Let's consider an example:
+```{r person_vectors}
+# Build the vector
+DrGabriel <- c("Odom", "Gabriel", "PhD, ThD", 30, "Pembroke Pines", "FL", "TX")
+
+# Inspect the Vector
+DrGabriel
+```
+
+How can we make this vector better? Well, we have discussed what these fields are, but we haven't formally named them. Let's do that:
+```{r person_vectors2}
+# Re-build
+DrGabriel <- c(
+  Surname = "Odom",
+  FirstName = "Gabriel",
+  HighestDegrees = "PhD, ThD",
+  Age = 30,
+  City = "Pembroke Pines",
+  State = "FL",
+  MovedFrom = "TX"
+)
+
+# Inspect
+DrGabriel
+```
+
+What if I want my age in months instead of years?
+```{r myAgeMonths, error = TRUE}
+DrGabriel[4] * 12 + 7
+```
+
+We immediately see an error: `non-numeric argument to binary operator`. What caused this?
+
+
+## The `class()` Function
+The error tells us that one of the numbers in `DrGabriel[4] * 12` is *non-numeric*. We can use the `class()` function to tell us what type of information is stored in `DrGabriel[4]`.
+```{r classIntro}
+class(DrGabriel[4])
+```
+
+The basic atomic classes in `R` (in order of complexity) are
+
+1. `logical`: This is the most basic type of information that can be stored in `R`. A vector with elements of class `logical` is a vector of only `TRUE` or `FALSE` values.
+2. `integer`: This is the second-most basic type of information. An `integer` vector is a vector of positive or negative counting numbers (and 0).
+3. `numeric`: This is the class for the Real numbers in `R`. Any object of class `integer` is necessarily also an object of class `numeric`, but the reverse is not true.
+4. `character`: This is the most complex class of atomic information. This class ensures that the information you type into `R` stays marked with the keystrokes you typed to enter it. Therefore, `"10"` is not recorded as the integer 10, or the real number 10.000000, but rather the combined keystrokes of the "1" and "0" keys on your keyboard (to be very technical, "1" and "0" are stored with the ASCII code 049 and 048, respectively, or perhaps as a UTF-8 encoded value).
+
+If you ever try to "mix" object of different complexities in `R`, the elements of lower complexity will be "promoted" to match the highest complexity level. For example
+```{r promotion}
+class(TRUE)
+class(c(TRUE, 1L))
+class(c(TRUE, 1L, 2.1))
+class(c(TRUE, 1L, 2.1, "yeeeeeaaaaaaaaaaaahhhhhhhh"))
+```
+
+We see that when we created the `DrGabriel` vector, the `numeric` age information was *promoted* to have class `character`. This is because basic vectors in `R` must be *atomic*: all elements they contain must have the same class.
+
+
+
+# Lists: Non-Atomic Vectors
+```{r person_list}
+# Create a List
+DrGabriel_ls <- list(
+  Surname = "Odom",
+  FirstName = "Gabriel",
+  HighestDegrees = "PhD, ThD",
+  Age = 30,
+  City = "Pembroke Pines",
+  State = "FL",
+  MovedFrom = "TX"
+)
+
+# Inspect
+DrGabriel_ls
+```
+
+
+
+# For Next Time: Data Frames
+```{r person_df}
+# Create a Data Frame
+DrGabriel_df <- data.frame(
+  Surname = "Odom",
+  FirstName = "Gabriel",
+  HighestDegrees = "PhD, ThD",
+  Age = 30,
+  City = "Pembroke Pines",
+  State = "FL",
+  MovedFrom = "TX"
+)
+
+# Inspect
+DrGabriel_df
+```

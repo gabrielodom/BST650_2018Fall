@@ -107,5 +107,7 @@ As a complimentary example to the pepper shaker, think about this list as a trai
     b. a named vector of the population parameters
     c. a vector of 15 samples from a normal distribution with mean 2 and variance 5
     d. the components of a histogram of these samples
-2. Test the hypothesis that these observations came from the distribution specified. Store the $p$-value, test statistic, critical value, and decision (reject or fail to reject) as new elements of the list.
-3. Repeat this for the rest of the distributions we inspected in Assignment 4.
+2. Print the distribution name and parameters (at the same time), and plot the saved histogram.
+3. Print the summary and variance of this sample.
+4. Test the hypothesis that these observations came from the distribution specified. Store the $p$-value, test statistic, critical value, and decision (reject or fail to reject) as new elements of the list.
+5. Repeat this for the rest of the distributions we inspected in Assignment 4. Did you reject the null hypothesis for any of the distributions? If so, which ones. If so, why do you think you rejected the null hypothesis for these distributions? If not, why not?

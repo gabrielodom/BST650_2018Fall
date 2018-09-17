@@ -1,0 +1,111 @@
+---
+title: "R Assignment 5"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "September 17, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Assignment 5: Due Sunday, 23 September at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+**I'm giving you some additional material to read. This should help you with the exercises I've assigned below.**
+
+
+### Read About Lists
+Read the following articles:
+
+- [Basics of Lists](http://r4ds.had.co.nz/lists.html): read until you reach the **For loops vs functionals** subsection; you don't have to do the exercises at the end.
+- [Editing Lists](https://www.datamentor.io/r-programming/list/): read entire article
+
+Based on these lessons, here are some helpful definitions:
+
+1. Subset a list by position or name with the `[` function
+2. Subset a list by position or name and extract its *contents* with the `[[` function
+3. Subset a list by name and extract its *contents* with the `$` function
+3. Find the class of an object with the `class()` function.
+
+
+### Examples
+I will create a simple list, then I will subset it in all manner of ways. This is a `list` of one element, the `integer` 3 stored with name `a`.
+```{r ex_list}
+# Create the list
+x_ls <- list(a = 3L, b = "five")
+
+# What is x_ls?
+class(x_ls)
+```
+
+#### The `[` Function
+I can extract the first element of `x_ls` by name or position.
+```{r subset1}
+# Subset by name
+x_ls["a"]
+
+# What is returned by this?
+class(x_ls["a"])
+
+
+# Subset by position
+x_ls[1]
+
+# What is returned by this?
+class(x_ls[1])
+```
+
+As we can see, the `[` function returns a list element. This can be helpful at times, but often we want the *contents* of that list element. The main upside to the `[` function is that we can select multiple list elements at once.
+```{r subset1multiple}
+x_ls[1:2]
+
+# What is returned by this?
+class(x_ls[1:2])
+```
+
+#### The `[[` Function
+I can extract the contents of the first element of `x_ls` by name or position.
+```{r subset2}
+# Subset by name
+x_ls[["a"]]
+
+# What is returned by this?
+class(x_ls[["a"]])
+
+
+# Subset by position
+x_ls[[1]]
+
+# What is returned by this?
+class(x_ls[[1]])
+```
+
+As we can see, the `[[` function returns the *contents* of the list element. We cannot, however, select multiple list elements with this function (try it yourself).
+
+#### The `$` Function
+I can extract the contents of the first element of `x_ls` by name only.
+```{r subset3}
+x_ls$a
+
+# What is returned by this?
+class(x_ls$a)
+```
+
+As we can see, the `$` function returns the *contents* of the list element. You might ask, "why do we need `$` when we have `[[`?" Notice that we didn't need to put `a` in quotes for `$` to work (`x_ls$a`, not `x_ls$"a"`). We will come back to the idea of using names of objects later this semester.
+
+
+### Review
+As a complimentary example to the pepper shaker, think about this list as a train. We can select the first car of the train with the `[` function. We could select any number of cars in the train with the `[` function. Additionally, we can extract the contents of a car by name or position with the `[[` function, but we can't select more than one car at a time. Finally, we can extract the contents of a train car by name with the `$` function; this function is special because it doesn't require us to type the quotes (`" "`) around the name.
+
+
+
+## Exercises
+1. Create a list with four elements:
+    a. the character string `"Normal"` to represent the distribution
+    b. a named vector of the population parameters
+    c. a vector of 15 samples from a normal distribution with mean 2 and variance 5
+    d. the components of a histogram of these samples
+2. Test the hypothesis that these observations came from the distribution specified. Store the $p$-value, test statistic, critical value, and decision (reject or fail to reject) as new elements of the list.
+3. Repeat this for the rest of the distributions we inspected in Assignment 4.

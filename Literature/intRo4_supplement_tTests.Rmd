@@ -1,0 +1,144 @@
+---
+title: "Testing Means in R"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "September 21, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+While we are still interested ultimately in testing the *distribution* of a data sample, we can first test if the mean of the sample is equal to the population mean.
+
+</br>
+
+## Student's $t$-Test
+To do this, we employ the [Student's $t$-test](https://en.wikipedia.org/wiki/Student%27s_t-test) for one sample. We first assume that the population can be reasonably approximated by a Normal distribution with mean $\mu_0$ and standard deviation $\sigma_0$. That is, wish to test the hypothesis
+\[
+H_0: \mu = \mu_0;\quad H_A: \mu \ne \mu_0.
+\]
+To test this hypothesis, we take a sample of data
+\[
+X = (x_1, x_2, \ldots, x_n),
+\]
+and we denote the sample mean as $\bar{x}$, sample standard deviation as $s$, and sample size as $n$. Given this sample, we test how unlikely it would be to see such a sample from the hypothesized distribution.
+
+The testing algorithm is as follows:
+
+1. Plot a histogram of the data to check normality.
+2. Calculate the sample mean and sample standard deviation.
+3. Find the test statistic with the formula
+\[
+t = \frac{\bar{x} - \mu}{s/\sqrt{n}}
+\]
+4. Look up the [critical value](http://www.sjsu.edu/faculty/gerstman/StatPrimer/t-table.pdf) from the Student's $t$ distribution based on $n - 1$ degrees of freedom and an appropriate Type-I error level (like $\alpha = 0.05$). Based on the alternative hypothesis ($H_A$), we are performing a two-tailed test, so the confidence level is $1 - \alpha/2$.
+5. Compare the test statistic to the critical value to make a decision. If the absolute value of the test statistic is greater than the critical value, then you reject the null hypothesis ($H_0$).
+
+</br>
+
+## Coding the Test in `R`
+Thankfully, there is a simple function to perform a Student's $t$-test in `R`: `t.test()`. First, let's draw a random sample. We are going to test the means for seven distributions, even distributions that are not even close to Normal! I'll chose a $\chi^2$-distribution to go first. I'd like a sample of size 15, with a mean of 2 (so I need to set the $\nu$ parameter to 2).
+```{r gen_data}
+set.seed(1234)
+xChiSq_ls <- list(
+  dist   = "ChiSq",
+  params = c(df = 2),
+  sample = rchisq(n = 15, df = 2)
+)
+```
+
+My first step is to plot a histogram of the data.
+```{r hist_data}
+hist(xChiSq_ls$sample)
+```
+
+Obviously this data doesn't look normal, but we will continue ahead with the $t$-test for the sake of example alone. 
+
+The next step is to look up the [`t.test()` function](https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/t.test) to find the appropriate arguments.
+```{r ttest_lookup, eval = FALSE}
+?t.test
+```
+
+We can see that we need to supply some values to these arguments or change the defaults for others:
+
+- `x` will be our vector `sample` in the `xChiSq_ls` list.
+- We aren't testing that two vectors are equal, so we can leave the `y` argument alone.
+- Based on the "not equal to" comparison of our alternative hypothesis ($H_A: \mu \ne \mu_0$), we will need to specify a two-tailed test: `alternative = "two.sided"`.
+- We are testing that the mean, $\mu_0$ is equal to 2, so we need to specify that `mu = 2`.
+- If we are comfortable with a Type-I error rate of 5%, we can leave the `conf.level` argument alone.
+
+Based on all of these components, my call to the `t.test()` function will be
+```{r ttest_call}
+ttest_out <- t.test(
+  x = xChiSq_ls$sample,
+  alternative = "two.sided",
+  mu = xChiSq_ls$params
+)
+```
+
+</br>
+
+## Inspecting the Test Output
+We need to extract some information from this test, such as the $p$-value and test statistic. We can first print the test output object we just created.
+```{r print_test}
+ttest_out
+```
+From this printed output, we can see that
+
+1. The $p$-value is 0.1425.
+2. The test statistic is -1.5541.
+
+Because we need to save this information in our experiment list, we need to know how to extract this information from the `ttest_out` object. Notice that the Environment tab in the top right of RStudio tells us that the `ttest_out` object is a list. We can find the names of a list with the `names()` function. These are the names of the elements stored within the `ttest_out` object:
+```{r out_names}
+names(ttest_out)
+```
+
+### The Test Statistic and $p$-Value
+We see that there are two elements we are interested in: `"statistic"` and `"p.value"`. Let's take a look at these.
+```{r out_inspect}
+ttest_out$statistic
+ttest_out$p.value
+```
+
+These are exactly what we're looking for. However, we need one last piece of information: the critical value.
+
+### The Critical Value
+Based on Step 4 above, we can look up the critical value of a test with a 95% confidence level and 15 - 1 degrees of freedom in a table. Or, we can have `R` do it for us! Remember that we used the `rt()` function to generate *random* values from the Student's $t$ distribution. We can use the `qt()` function to give us the *quantile* of the distribution based on the confidence level and degrees of freedom. Remember that a Type-I error of $\alpha = 0.05$ gives us a two-sided confidence quantile of 0.975 ($1 - \alpha/2$).
+```{r cv}
+critVal <- qt(0.975, df = 15 - 1)
+```
+
+</br>
+
+## Making a Decision and Storing our Results in a List
+Now that we have the test statistic and critical value, we can compare them to make a decision. Should we reject $H_0$?
+```{r test_decision}
+abs(ttest_out$statistic) > critVal
+```
+
+No, we should not. Also, notice that we could have made the same decision via the $p$-value: 
+```{r pVal_decision}
+ttest_out$p.value < 0.05
+```
+
+Now we need to store all these components in our experment list.
+```{r store_res}
+# p-value
+xChiSq_ls$pVal <- ttest_out$p.value
+
+# test statistic
+xChiSq_ls$testStat <- ttest_out$statistic
+
+# critical value
+xChiSq_ls$critVal <- critVal
+
+# decision
+xChiSq_ls$decision <- "Fail to Reject the Hypothesis that the True Mean Equals 2"
+```
+
+Let's take a look at our experiment:
+```{r print_final_list}
+xChiSq_ls
+```

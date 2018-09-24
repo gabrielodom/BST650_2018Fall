@@ -1,0 +1,33 @@
+---
+title: "R Assignment 5"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "September 24, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 5: Due Sunday, 30 September at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+### Part 1
+Finish the work you have left over from Assignment 4. Email me when you finish, so I can look at it. Please finish this by Tuesday evening.
+
+### Part 2
+Read [this article](https://www.r-bloggers.com/5-ways-to-subset-a-data-frame-in-r/) and execute the code in it. For the last example in this article (using the `dplyr` package), use the `tidyverse` package you just installed instead. The `filter()` and `select()` functions are the same. Include the code from this article and your output as the first section of your markdown report.
+
+### Part 3
+1. Create the `myClass` data frame we covered in class. When you create the data frame, make sure that your character **strings** are not changed to **factors** (look at `?data.frame` for the `stringsAsFactors` argument; also look at how the article does it). Include a row in the data frame for me, you, and your classmates. Here are the features to measure:
+    a. last name
+    b. first name
+    c. number of cups of coffee or tea per day, and
+    d. current neighbourhood
+2. For each of the five data-frame subsetting methods in the article above, subset
+    i. Your row
+    ii. the column of neighbourhoods
+    iii. your current neighbourhood
+    iv. your AND my current neighbourhood, as a data frame
+    v. the rows with people who drink coffee or tea
+    vi. the neighbourhoods of people who *do not* drink coffee or tea

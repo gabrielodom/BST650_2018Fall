@@ -1,5 +1,5 @@
 ---
-title: "R Assignment 5"
+title: "R Assignment 6"
 author: "Gabriel J. Odom, PhD, ThD"
 date: "September 24, 2018"
 output: html_document
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 *For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
 
 ### Part 1
-Finish the work you have left over from Assignment 4. Email me when you finish, so I can look at it. Please finish this by Tuesday evening.
+Finish the work you have left over from Assignment 5. Email me when you finish, so I can look at it. Please finish this by Tuesday evening.
 
 ### Part 2
 Read [this article](https://www.r-bloggers.com/5-ways-to-subset-a-data-frame-in-r/) and execute the code in it. For the last example in this article (using the `dplyr` package), use the `tidyverse` package you just installed instead. The `filter()` and `select()` functions are the same. Include the code from this article and your output as the first section of your markdown report.

@@ -1,0 +1,27 @@
+---
+title: "Bootstrap Assignment 1"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "October 1, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bootstrap Assignment 1: Due Sunday, 7 October at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+### Part 1
+Create a new GitHub repository called `BST650_Bootstrap`. Connect your computer to this repository. Create a `ReadMe.Rmd` file for this repository.
+
+### Part 2
+Create an Rmarkdown file called "Assignment1.Rmd". In this report:
+
+1. Work through this lesson on functions: https://swcarpentry.github.io/r-novice-inflammation/02-func-R/
+2. Create a function called `bootstrap()` that modifies the behaviour of the `sample()` function to perform a bootstrap sample on a given vector. Remember that bootstrap samples are the same **length** as the original sample, and remember that these samples are taken **with replacement** (*hint, hint*).
+3. Create the following vector: `grades = c(92, 80, 85, 95, 97, 78, 90, 86, 88, 66, 70, 82)`. Find the five-number summary, mean, and standard deviation of `grades`.
+3. Call your function 10 times on `grades`. Store each bootstrapped sample as `boot1`, `boot2`, ..., `boot10`.
+4. Find the five-number summary, mean, and standard deviation of each bootstrap sample.
+5. Create a data frame of these summary statistics (10 rows and seven columns).
+6. Find the bootstrap estimate of each element of the five-number summary, mean, and standard deviation (look at the formula in your notes, then look at the `?colMeans` help file).

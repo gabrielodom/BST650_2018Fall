@@ -1,0 +1,36 @@
+---
+title: "Bootstrap Assignment 2"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "October 15, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bootstrap Assignment 2: Due Sunday, 21 October at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+
+### Part 1
+Look through the rest of the `lapply()` call that we didn't finish this morning. Create a function called `CheckCoverage()` with the following arguments:
+
+- `x`: a vector
+- `n`: the size of the random sample to draw from `x`
+- `alpha`: the tolerance for a Type-I error. This should default to `0.05`.
+
+This function should return a single logical value indicating whether the $1- \alpha$-level confidence interval contains the true value of the mean. Test your function to ensure it works as intended.
+
+
+### Part 2
+Apply the `CheckCoverage()` function you wrote in Part 1 to find the coverage probability after 10,000 replicates (HINT: use the `replicate()` function instead of `lapply()`; see `?replicate` for more information) for sample sizes of 10, 30, and 50 for the following measurements:
+
+- `arcus`
+- `height`
+- `ncigs`
+- `BMI` (we calculated this column ourselves)
+
+
+### Part 3
+Inspect the histograms or densities of the four above measurements of interest. Can you draw any conclusions about the coverage results you saw in Part 2 and the shapes of these four measurements?

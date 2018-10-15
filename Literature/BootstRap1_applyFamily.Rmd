@@ -1,0 +1,13 @@
+---
+title: "Bootstrapping in R: Applying Functions"
+author: "Gabriel Odom"
+date: "10/8/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+See the scripts in `Code/bootstRap*.R`.

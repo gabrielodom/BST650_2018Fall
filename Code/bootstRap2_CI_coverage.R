@@ -83,8 +83,7 @@ mean(
   replicate(
     100000,
     CheckCoverage(x = wcgs_df$arcus, n = 10)
-  ),
-  na.rm = TRUE
+  )
 )
 # 99% for n = 10, 95.3% for n = 30, 94.9% for n = 50
 
@@ -108,8 +107,8 @@ hist(wcgs_df$ncigs)
 mean(
   replicate(
     100000,
-    CheckCoverage(x = wcgs_df$ncigs, n = 50)
+    CheckCoverage(x = wcgs_df$ncigs, n = 100)
   ),
   na.rm = TRUE
 )
-# 93.1% for n = 10, 94.3% for n = 30, 94.6% for n = 50
+# 93.1% for n = 10, 94.3% for n = 30, 94.6% for n = 50, 95.2% for n = 100

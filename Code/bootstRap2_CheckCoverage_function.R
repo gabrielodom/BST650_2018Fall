@@ -20,6 +20,11 @@ CheckCoverage <- function(x, n, alpha = 0.05){
   
   # Step 4: Test if the population mean is contained in the CI
   CI <- t_mod$conf.int
-  (CI[1] < xMu) && (xMu < CI[2])
+  failToReject <- (CI[1] < xMu) && (xMu < CI[2])
+  if(is.na(failToReject)){
+    failToReject <- FALSE
+  }
+  
+  failToReject
   
 }

@@ -1,0 +1,49 @@
+---
+title: "Regression Assignment 1"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "October 29, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Regression Assignment 1: Due Sunday, 1 November at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+
+### 1. Create a Regression Repository on GitHub
+Just like we did for the bootstrap module, create a repository on GitHub to store our work on regression. Call it `BST650_Regression` or something similar.
+
+
+### 2. Primer on Partial Derivatives
+Complete the following exercises. Turn in the work for 2 (the worked derivatives) to me next class on paper.
+
+1. Work through this Khan Academy article (stop at the "A more formal definition" section): https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives/partial-derivative-and-gradient-articles/a/introduction-to-partial-derivatives
+2. Find both the partial derivatives (with respect to $\mu$ and $\sigma$) of the normal log-likelihood
+\[
+\log(L(\mu, \sigma | \textbf{x})) = \sum_{i = 1}^n \log\left( \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left[ -\frac{(x_i - \mu)^2}{2\sigma^2} \right] \right).
+\]
+Set these partial derivatives equal to zero, and solve for $\mu$ and $\sigma$. Do you recognize these formulas?
+
+
+### 3. Calculate Univariate Regression Estimates
+Consider on the simple linear regression model we covered in class:
+```{r regression_example}
+wcgs_df <- read.csv("../data/wcgs.csv")
+
+plot(
+  x = wcgs_df$dbp,
+  y = wcgs_df$sbp,
+  xlab = "Diastolic Blood Pressure (mmHg)",
+  ylab = "Systolic Blood Pressure (mmHg)"
+)
+lm(sbp ~ dbp, data = wcgs_df)
+```
+
+Based on this model output, the slope ($\beta_1$) is approximately 1.2, while the intercept ($\beta_0$) is about 30.1. 
+
+Write a function which takes in any two numeric vectors (`x` and `y`) and returns a named vector of the slope and intercept of the linear model $\hat{\textbf{y}} = \beta_0 + \beta_1\textbf{x}$. Your function should use formulas (from your other classes) to calculate these estimates directly (that is, without a call to the `lm()` or any other modelling function in R).
+
+**If you don't have enough time to complete part 3, that's ok. But at least start on it.**

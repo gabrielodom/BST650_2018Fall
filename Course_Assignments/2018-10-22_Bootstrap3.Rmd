@@ -1,0 +1,18 @@
+---
+title: "Bootstrap Assignment 3"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "October 22, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bootstrap Assignment 3: Due Sunday, 28 October at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+Read this chapter on functions and if/else statements in R:
+http://r4ds.had.co.nz/functions.html
+
+Create a markdown report where you execute the code from this chapter, and attempt the exercises after each section. Some of them will be more challenging than others, but I still want you to try to solve them.

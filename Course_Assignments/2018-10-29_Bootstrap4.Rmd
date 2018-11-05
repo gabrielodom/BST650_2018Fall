@@ -1,0 +1,30 @@
+---
+title: "Bootstrap Assignment 4"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "October 29, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bootstrap Assignment 3: Due Sunday, 4 November at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+
+### Create a Resampling / Bootstrapping Function
+Based on our work on the bootstrap function in class, create a function which will perform a resampling calculation on a vector- or matrix-like object of any statistic appropriate for that object. This function should take in:
+
+1. The data object. This should be able to be an atomic vector, list, matrix, or data frame.
+2. The statistic desired. This should be able to be any function for which the call `statistic(data)` is appropriate. For example, if the data is a matrix, then the statistic could be the `rowMeans()` function, because this function can be called without error on a numeric matrix.
+3. The number of resamples to take with replacement. This should default to the sample size within the data object, and the function should throw an error if the desired resample size is greater than the number of observations within the data object.
+
+The function should return the calculation of the statistic required on a random subsample of the data supplied.
+
+
+### Repeatedly Apply your Function
+Choose a few statistical method functions (`mean`, `var`, `sd`, `cov`, `colMeans`, etc.). For each of those functions, find 100 resample estimates of their corresponding statistics based on a sample size of 20. For example, your code should look something like this (`simplfy = FALSE` will return a list of the statistic estimates):
+```{r eval=FALSE}
+replicate(100, BootstrapThe(data = data_df, statistic = colMeans, n = 10), simplify = FALSE)
+```

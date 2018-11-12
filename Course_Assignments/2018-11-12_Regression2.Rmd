@@ -1,0 +1,65 @@
+---
+title: "Regression Assignment 2"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "November 12, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Regression Assignment 2: Due Sunday, 18 November at 23:59PM
+*For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
+
+
+### 1. Derive Estimate of $\boldsymbol\beta$ for Mulitple Least Squares
+Follow the steps we completed in class. Start with
+\[
+\textbf{y} = \textbf{X}\boldsymbol\beta + \boldsymbol\varepsilon .
+\]
+Starting from the sum of squared errors definition, 
+\[
+\text{SSE} := \sum_\limits{i = 1} ^ n \varepsilon_i^2,
+\]
+show that the value of $\boldsymbol\beta$ which minimises the SSE is
+\[
+\hat{\boldsymbol\beta} = \left( \textbf{X}^T\textbf{X} \right)^{-1} \textbf{X}^T\textbf{y}.
+\]
+You should only use the 6 rules shown below. There are other rules, but these are all you need. When you use one of the rules below, state that you have used it on the line that you use it. (Incidentally, the rule that I asked for in class to take the derivative of $\textbf{y}^T\textbf{X}\boldsymbol\beta$ w.r.t $\boldsymbol\beta$ is shown in 5, below. By this identity, the derivative in question is $\textbf{X}^T\textbf{y}$, as I claimed in class.)
+
+#### Matrix Algebra and Matrix Calculus Rules
+First, assume $\textbf{A}, \textbf{X} \in \mathbb{R}_{n \times p}$, $\textbf{C} \in \mathbb{R}_{p \times m}$, $\textbf{S} \in \mathbb{R}_{p \times p}$, and $\textbf{x}, \textbf{b} \in \mathbb{R}_{p \times 1}$. Here are the rules you will need to complete the above exercise, from the [Matrix Cookbook](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf). 
+
+1. $\left( \textbf{A}^T \right)^T := \textbf{A}$ (*by definition*)
+2. $\left( \textbf{A} + \textbf{X} \right)^T := \textbf{A}^T + \textbf{X}^T$ (*page 6, no. 4*)
+3. $\left( \textbf{AC} \right)^T := \textbf{C}^T\textbf{A}^T$ (*page 6, no. 5*)
+4. $\partial \textbf{X}^T := \left( \partial \textbf{X} \right)^T$ (*page 8, no. 44*)
+5. $\frac{\partial}{\partial \textbf{b}} \textbf{b}^T \textbf{x} := \frac{\partial}{\partial \textbf{b}} \textbf{x}^T \textbf{b} := \textbf{x}$ (*page 10, no. 69*)
+6. $\frac{\partial}{\partial \textbf{b}} \textbf{b}^T \textbf{S} \textbf{b} := \left( \textbf{S} + \textbf{S}^T \right) \textbf{b}$ (*page 11, no. 81*)
+
+
+
+### 2. Calculate Multiple Regression Estimates
+Now consider the multiple linear regression model. Modify your function from last class to take in a numeric response vector `y` and a numeric design matrix `X`. This function should return a *named* vector of the regression coefficients from the linear model
+\[
+\hat{\textbf{y}} = \beta_0 + \beta_1\textbf{x}_1 + \beta_2\textbf{x}_2 + \ldots + \beta_p\textbf{x}_p.
+\]
+Your function should use the formula you derived in Part 1 to calculate these estimates directly (that is, without a call to the `lm()` or any other modelling function in R).
+
+A few details:
+
+1. If the data matrix `X` has column names, the names for the vector of regression coefficients should be `"Intercept"` plus those names. Otherwise, the names should be `"Intercept"`, `"beta1"`, `"beta2"`, ..., `"betap"` (where `p` is the number of predictors in `X`). See the `paste0()` help documentation. 
+2. Remember that the design matrix `X` probably doesn't have the leading column of 1s that we need to estimate $\beta_0$.
+3. Matrix multiplication uses different functions in R. See the help files for `t()`, `%*%`, and `solve()`.
+4. Matrix math in R is different between matrices and data frames (*why?*). Make sure to account for both of these input options.
+
+Use your function to calculate the regression coefficients for
+\[
+\text{chol}_i = \beta_0 + \beta_1\text{age}_i + \beta_2\text{weight}_i + \beta_3\text{sbp}_i + \varepsilon_i,\quad i = 1, \ldots, n
+\]
+from the WCGS data. Compare the intercept and coefficients you calculated to those returned by the `lm()` function. I get this output:
+```{r echo = FALSE}
+ wcgs_df <- read.csv("../data/wcgs.csv")
+lm(chol ~ age + weight + sbp, data = wcgs_df)
+```

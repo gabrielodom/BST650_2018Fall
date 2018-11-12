@@ -1,7 +1,7 @@
 ---
 title: "Regression Assignment 1"
 author: "Gabriel J. Odom, PhD, ThD"
-date: "October 29, 2018"
+date: "November 5, 2018"
 output: html_document
 ---
 
@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Regression Assignment 1: Due Sunday, 1 November at 23:59PM
+## Regression Assignment 1: Due Sunday, 11 November at 23:59PM
 *For help with Rmarkdown for reports, see this [white paper](http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown) from Carnegie Mellon University's Department of Statistics and Data Science.*
 
 

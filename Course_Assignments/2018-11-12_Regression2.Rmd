@@ -38,6 +38,7 @@ First, assume $\textbf{A}, \textbf{X} \in \mathbb{R}_{n \times p}$, $\textbf{C} 
 5. $\frac{\partial}{\partial \textbf{b}} \textbf{b}^T \textbf{x} := \frac{\partial}{\partial \textbf{b}} \textbf{x}^T \textbf{b} := \textbf{x}$ (*page 10, no. 69*)
 6. $\frac{\partial}{\partial \textbf{b}} \textbf{b}^T \textbf{S} \textbf{b} := \left( \textbf{S} + \textbf{S}^T \right) \textbf{b}$ (*page 11, no. 81*)
 
+</br>
 
 
 ### 2. Calculate Multiple Regression Estimates
@@ -63,3 +64,9 @@ from the WCGS data. Compare the intercept and coefficients you calculated to tho
  wcgs_df <- read.csv("../data/wcgs.csv")
 lm(chol ~ age + weight + sbp, data = wcgs_df)
 ```
+
+</br>
+
+
+### 3. Have an Awesome Thanksgiving
+This assignment may me difficult to some of you, but try to take a break and relax. Spend time with some friends and family (if possible). Eat delicious food. Most importantly, try to come up with 2-3 things for which you are thankful.

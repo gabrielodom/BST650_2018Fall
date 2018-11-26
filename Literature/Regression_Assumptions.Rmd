@@ -1,0 +1,87 @@
+---
+title: "Checking Regression Assumptions"
+author: "Gabriel Odom"
+date: "11/26/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+We have built a regression model assessing the relationship between blood cholesterol and age, weight, and systolic blood pressure.
+
+What are the five assumptions of multiple linear regression?
+
+0. The linear model is appropriate
+1. Errors are normally distributed
+2. Errors are centred at 0
+3. Errors have constant variance (Homoskedasticity)
+4. Errors are independent
+5. No multicollinearity
+
+We can encapsulate the first four into a single equation:
+\[
+\varepsilon_i\ \sim \text{i.i.d.}\ N(0, \sigma)
+\]
+
+
+
+## Setup
+We load the packages and data we need:
+```{r}
+library(tidyverse)
+wcgs_df <- read_csv("../data/wcgs.csv")
+```
+
+Now we can construct the linear model in order to test the assumptions above.
+```{r}
+chol_mod <- lm(chol ~ age + weight + sbp, data = wcgs_df)
+```
+
+
+
+## Assumptions of Multiple Linear Regression
+
+### Assumption 1: Model Errors are Normally Distributed
+Overall, the residuals appear to be normally distributed, based on the histogram, but we may have a few outliers. When we inspect the QQ-plot, we probably have an outlier.
+```{r}
+str(chol_mod)
+# Histogram
+hist(chol_mod$residuals)
+
+# QQ-Plot
+qqnorm(chol_mod$residuals)
+qqline(chol_mod$residuals)
+```
+
+Try a transformation:
+```{r}
+hist(wcgs_df$chol)
+cholSq_mod <- lm(sqrt(chol) ~ age + weight + sbp, data = wcgs_df)
+hist(cholSq_mod$residuals)
+
+qqnorm(cholSq_mod$residuals)
+qqline(cholSq_mod$residuals)
+```
+
+That's probably not any better. Let's leave the data alone...
+
+
+### Assumption 2: Model Errors are Centred at 0
+The quick and dirty way would be to look at the centre of the histogram. We can also perform a statistical test:
+```{r}
+t.test(chol_mod$residuals, alternative = "two.sided", mu = 0)
+```
+
+0 is dead-set in the middle of the confidence interval. We're rather confident that the mean of the residuals is close enough to 0.
+
+
+### Assumption 3: Model Errors are Homoskedastic
+
+
+### Assumption 4: Model Errors are Independent
+
+
+### Assumption 5: Model Predictors are not Perfectly Correlated

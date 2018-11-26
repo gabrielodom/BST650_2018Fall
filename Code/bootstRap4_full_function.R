@@ -23,6 +23,26 @@ takeThe(sd, x)
 #  4. call statistic on sample
 
 
+testFun <- function(data, statistic, n){
+  
+  data <- na.omit(data) # will work for matrices or atomic vectors
+  
+  sample_idx <- sample(1:nrow(data), size = n, replace = FALSE)
+  sampleOfData <- data[sample_idx, ]
+  statistic(sampleOfData)
+  
+}
+
+# Test
+testFun(data = wcgs_df, statistic = summary, n = 10)
+testFun(data = wcgs_df[, 7:11], statistic = colMeans, n = 10)
+
+
+
+
+
+
+#
 BootThe <- function(data, statistic = mean, n = NULL, ...){
   
   if((is.matrix(data) == TRUE) || (is.data.frame(data) == TRUE)){

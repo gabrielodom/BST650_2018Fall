@@ -79,9 +79,40 @@ t.test(chol_mod$residuals, alternative = "two.sided", mu = 0)
 
 
 ### Assumption 3: Model Errors are Homoskedastic
+From StackExchange, I found that I can use the Breusch-Pagan test for constant variance of the model errors. My null hypothesis is that the variance of the errors is constant.
+```{r}
+library(lmtest)
+# Perform the Breusch-Pagan test against heteroskedasticity
+res <- bptest(chol_mod)
+res
+```
 
+Based on this $p$-value, we fail to reject the null hypothesis. Therefore, the model errors appear to be homoskedastic.
+
+Also, we can plot the errors.
+```{r}
+plot(chol_mod$residuals)
+```
+
+The spread of the residuals appears to be constant.
 
 ### Assumption 4: Model Errors are Independent
+We found on [this Duke website on linear regression assumptions](http://people.duke.edu/~rnau/testing.htm#independence) that we can use the Durbin-Watson test on the model errors. Our null hypothesis is that the auto-correlation of the model errors (with themselves) is 0. Recall that we have shown that our errors are probably normally distributed. Thus, if these errors also have autocorrelation of 0, then they are independent. Symbolically, 
+\[
+\textbf{x} \sim N(\mu, \sigma)\ \text{AND}\ \rho(x_i, x_j) = 0\ \forall i\ne j \Longrightarrow x_i \perp \!\!\! \perp x_j \forall i \ne j.
+\]
 
+We then test that the autocorrelation is equal to 0.
+```{r}
+dwtest(chol_mod)
+```
+Because the $p$-value is less than 0.05, we should reject the null hypothesis that the autocorrelation of the model errors equals 0. Therefore the model errors appear to be dependent on each other. This is a problem. We need to inspect this further.
+
+Let's also plot the autocorrelation function.
+```{r}
+acf(chol_mod$residuals)
+```
+
+Values above the blue line indicate statistical significance. However, this significant autocorrelation is less than 5%, so it is most likely not practically significant. Thus, the errors are practically indpendent, but statistically dependent.
 
 ### Assumption 5: Model Predictors are not Perfectly Correlated

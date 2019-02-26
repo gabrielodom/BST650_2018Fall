@@ -1,0 +1,159 @@
+---
+title: "Exploring the SIR Model in R"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "February 26, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+As biostatisticians, specifically from a department of public health, we should be familiar with some of the more rigorous tools used in epidemiology. One such model is the SIR model: the simplest form of the dynamic model for the spread of a contagious disease.
+
+Our code is from [this blog](https://www.r-bloggers.com/sir-model-with-desolve-ggplot2/), and the math is from [this MAA article](https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease-the-differential-equation-model).
+
+We will need the following packages
+```{r cars}
+# install.packages("deSolve")
+library(deSolve)
+library(tidyverse)
+```
+
+
+
+## Model Overview
+
+### Definition of Necessary Notation
+
+#### Population Equations
+The **SIR** model is based on the dynamic state-switching of $N$ persons from between three states over discrete time $t$:
+
+1. **S**usceptible: the proportion of the population who have note yet become infected, but can become infected with the disease, at time $t$; denoted $s(t)$.
+2. **I**nfected: the proportion of the population who are currently infected at time $t$; denoted $i(t)$. 
+3. **R**ecovered: the proportion of the population who is no longer infected (they technically could be dead, but this requires a slightly more complicated model); denoted $r(t)$.
+
+Take some time to sketch out what you think these three curves might look like over time. The curves for $s(t)$ and $r(t)$ should be simple, but $i(t)$ might take some careful thought.
+
+
+#### Parameters
+We have a few other components to this model:
+
+1. $\beta$: the "transmission" parameter. The average number of susceptible people that an infected person will infect in a fixed time. This is often parametrized as a rate parameter from the Poisson distribution as $\beta = cp$, where $c$ is the number of contacts in the fixed time and $p$ is the probability of disease transmission for each contact.
+2. $\gamma$: the "recovery" parameter. The Poisson rate of individuals moving from the infected to the recovered group; that is, how many units of time are infected people infectious?
+
+
+### Model Assumptions
+We need quite a few assumptions for this simple model to work properly:
+
+- We assume that $s(0) \approx 1$. That is, the vast majority of the population is susceptible at the start of the outbreak.
+- We assume that the number of susceptible people cannot grow (there are no births).
+- We assume that $s(0) + i(0) = 1$; that is, there are a few infected individuals, but all other members of the population are susceptible. This implies that $r(0) = 0$.
+- We assume that no one dies of this disease (so that the number of recovered people cannot shrink). This assumption is one of the first assumptions to be tossed out as we generalize this model, but it helps us understand the basic mechanics.
+- We assume that recovery conveys unconditional immunity.
+
+
+### Model Definition
+Because each piece of the SIR model changes with time, we need to use a system of ordinary differential equations. These equations were defined in [Kermack et al. (1927)](https://doi.org/10.1098/rspa.1927.0118).
+
+\[
+\frac{ds}{dt} := -\beta s(t)i(t) \\
+\frac{di}{dt} := \beta s(t)i(t) - \gamma i(t) \\
+\frac{dr}{dt} := \gamma i(t)
+\]
+
+Think about an intuitive explination for each equation ($ds$ is the most challenging). Notice that $s(t) + i(t) + r(t) = 1 \Longrightarrow ds + di + dr = 0$.
+
+
+
+## Solving the H1N1 SIR Model in R
+
+### System of Differential Equations
+We can use the `deSolve` package to solve differential equations. We first define the SIR model as a function:
+```{r}
+SIR.model <- function(time, y, parameters){
+  
+  with(
+    data = as.list(c(y, parameters)),
+    expr = {
+      dS <- -bet * S * I
+      dI <- bet * S * I - gamm * I
+      dR <- gamm * I
+      
+      list(c(dS, dI, dR))
+    }
+  )
+  
+}
+```
+
+The `with()` function evaluates an expression with the data from a given environment (the `data` argument in our case).
+
+### Initial Conditions and Parameters
+Now that we have our set of differential equations, we need the intial conditions and parameters. As we mentioned before, $s(0) + i(0) = 1$, with the proportion of infected individuals almost 0.
+```{r}
+init_num <- c(S = 1 - 0.000001, I = 0.000001, R = 0)
+```
+
+Now for the fun stuff. We recall that $\beta$ is the transmission rate and $\gamma$ is the recovery rate. According to [Romagosa et al. (2011)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3258204/), the naive transmission rate for H1N1 influenza in unvaccinated populations is 2.85, while the naive estimate of the infectious period is 4.5 days. We will follow this outbreak over 30 days, but we will check the states every 12 hours.
+```{r}
+params_num <- c(bet = 2.85, gamm = 1 / 4.5)
+t <- 30
+time_num <- seq(0, t, by = 0.5)
+```
+
+### Solve the System
+Now that we have our disease parameters and population initial values, we can solve the system to estimate the proportion of individuals in each state at a given time.
+```{r}
+out_mat <- ode(
+  y = init_num,
+  times = time_num,
+  func = SIR.model,
+  parms = params_num
+)
+```
+
+To be completely honest, the `ode()` function is *very* touchy: you need to supply *exactly* what it wants in *exactly* the form it wants it.
+
+Now to plot our solution curves:
+```{r}
+plot(out_mat)
+```
+
+Was this what we expected these curves to look like? The susceptible population decreases to 0%, while the recovered population increases to 100%. This was what we expected.
+
+We can overlay the three curves:
+```{r}
+matplot(out_mat[, -1], type = "l")
+```
+
+
+
+## Solving the 1918 Spanish Flu SIR Model in R
+
+### Initial Parameters
+According to [Chowell et al. (2006)](https://doi.org/10.1016/j.vaccine.2006.05.055), the transmission rate for the 1918 Spanish Flu was 5.75, while the estimate of the infectious period was 0.38 days. We will follow this outbreak over 10 days, but we will check the states every 12 hours.
+```{r}
+params_num <- c(bet = 5.75, gamm = 1 / 0.38)
+t <- 10
+time_num <- seq(0, t, by = 0.5)
+```
+
+### Solve the System
+Now that we have our disease parameters and population initial values, we can solve the system to estimate the proportion of individuals in each state at a given time.
+```{r}
+out_mat <- ode(
+  y = init_num,
+  times = time_num,
+  func = SIR.model,
+  parms = params_num
+)
+```
+
+Now to plot our solution curves:
+```{r}
+matplot(out_mat[, -1], type = "l")
+```
+

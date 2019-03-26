@@ -1,0 +1,12 @@
+name: oldFaithful_test
+title: oldFaithful_test
+username:
+account: gabrielodom
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 816165
+bundleId: 1966765
+url: https://gabrielodom.shinyapps.io/oldFaithful_test/
+when: 1553633748.40468
+asMultiple: FALSE
+asStatic: FALSE

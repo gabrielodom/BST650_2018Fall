@@ -16,7 +16,7 @@ As biostatisticians, specifically from a department of public health, we should 
 Our code is from [this blog](https://www.r-bloggers.com/sir-model-with-desolve-ggplot2/), and the math is from [this MAA article](https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease-the-differential-equation-model).
 
 We will need the following packages
-```{r cars}
+```{r packages, message=FALSE}
 # install.packages("deSolve")
 library(deSolve)
 library(tidyverse)

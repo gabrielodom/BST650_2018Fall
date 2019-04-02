@@ -1,0 +1,62 @@
+---
+title: "Writing a Technical Resume"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "April 2, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+This document serves as a summary of quite a few resources on writing a resume. I have added in components specific to your goals as budding data scientists. The topics we will cover are:
+
+1. Resume Content / Outline
+2. Format and Media
+
+
+# Resume Content and Outline
+
+> **RULE 1:** Your resume should rarely--if ever--be longer than two pages. As you gain education and experience, less important education and experience should be left off.
+
+## Overview
+### Industry
+A technical resume for entry-level industry candidates should have the following sections:
+
+1. Overview and Personal Statement
+2. Education
+3. On-the-job Experience
+4. Awards
+5. Skills (not otherwise mentioned in the **Work Experience** section)
+
+This order is not required, but usually recommended. Keep education before work experience until you have more contiguous, relevant, industry experience than you have graduate education--one to two years for someone with a master's.
+
+### Academia
+A technical resume for an associate scientist or junior faculty will have the following additional sections:
+
+a. Grants (as PI, Co-I, scientist in a role, sponsored student, etc)
+b. Publications (peer reviewed first, then in revision, then under review last)
+c. Teaching (highlight any classes where you were the instructor of record)
+d. Presentations (highlight invited talks or posters)
+e. Abstracts (especially if published)
+f. Department Service (edited papers or grants, consulting, school panels, etc)
+
+These sections often slot somewhere between 2 and 4 of the industry outline.
+
+
+### Overview and Personal Statement
+
+### Education
+
+### Work Experience
+
+### Awards
+
+### Skills
+
+
+
+# Resume Format and Media
+
+

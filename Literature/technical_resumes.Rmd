@@ -26,11 +26,78 @@ This document serves as a summary of quite a few resources on writing a resume. 
 
 The formatting and layout of your resume answers the most important question of all: should I keep looking at this resume?
 
+How you display your resume sends a message. Should you write a [website-based resume](http://rpubs.com/gabrielodom/curriculum_vitae), a [YouTube video](https://www.youtube.com/watch?v=Hr5IjU13B9Y), a [billboard](https://cdn.cnn.com/cnnnext/dam/assets/120423102115-dnt-mn-man-puts-resume-on-billboard-00010905-story-top.jpg), an [ad in a magazine](https://infographicresumes.com/) or newspaper, an [Amazon product page](https://phildub.com/#), or a plain old PDF/Word document?
 
-## Format and Visual Rhetoric
+We will watch [this video](https://www.youtube.com/watch?v=-vJvivIzkDg) from the Purdue OWL (from 0'20" to 2'45").
 
 
-## Media
+## Visual
+There are many styles of resumes to choose from, but be consistent with the one you pick. Changing colours, arrangement, or fonts throughout the document distract the reader from the message you are trying to send. 
+
+Whatever you do, don't let the page get too "busy". Always zoom out to 50% zoom (or something similar) to look at the "big picture" of the page. You want the resume to look clean and easy to read.
+
+Here are [some tips](https://www.themuse.com/advice/12-tiny-changes-that-make-your-resume-easy-for-recruiters-to-skim):
+
+### Colour
+Pick one (two at most) colour(s) to draw attention to important details of your resume, or to draw attention to the resume itself. 
+
+See [these examples](https://www.canva.com/learn/accent-color-resume/). (I don't recommend many of these layouts, but the use of colour can be beneficial.)
+
+### Arrangement
+As with colour, the arrangement of the helps to highlight the most important aspects of your resume. As we saw in the above link, people can be very creative with their resume layout and arrangement! However, I would err on the side of caution: you are scientists, not artists or marketing managers.
+
+Here is a nice resume template for a professional applicant:
+
+![](https://www.canva.com/learn/wp-content/uploads/2018/11/Gray-Modern-Professional-Resume-tb-800x0.jpg)
+
+This is a very create resume for an artist:
+![](https://cdn.dribbble.com/users/118436/screenshots/2190752/pj-cv-shot.jpg)
+
+Notice that the arrangement and the layout of the material tell the story of who the applicant is, long before we ever read the words. As scientists, a clean and logically-arranged resume will give the message that you are attentive to detail, and that you prize logic and order.
+
+#### White Space
+To aid in the "clean and logical" goal, don't be afraid of whitespace! Blank space should seperate sections like periods should separate sentences and spaces separate words. We. don't. write. like. this. Andwedon'twritelikethiseither. Use whitespace to help tell your story.
+
+#### Examples
+
+![](https://www.reed.co.uk/career-advice/wp-content/uploads/sites/6/2016/10/view-resume-990x1281.jpg)
+
+![](https://d.novoresume.com/images/blogs/0ee7f780-5755-11e8-9417-7d5200ef4edd/computer-science-resume.png)
+
+
+
+### Font
+The [font choice](https://zety.com/blog/best-fonts-for-resume) doesn't win you much when you choose correctly, but it can be disastrous for you should you choose incorrectly. You want to choose a font that is
+
+- Large enough to be easy on the eyes; 11-12 point. Use larger font sizes for section headers and smaller font sizes to hide minutiae.
+- Sans-serif (usually) for the content; Calibri, Helvetica, Arial, or Verdana
+- Serif fonts are more formal; Cambria, Times New Roman, Georgia, Garamond
+
+#### Changing Fonts
+Can we switch fonts? Discussion:
+
+- There are resume experts who believe you should never change the font of the resume. It's too distracting.
+- Other experts believe that changing fonts between headers and promts to content helps guide the reader. For example, section headers in a sans-serif font, and content in a serif font, or vice-versa.
+- If you want to accent a name (school, employer, your name, etc.), I think that a serif font works nicely (this is entirely my opinion; some have vehemently disagreed with me).
+
+
+#### **Bold**, *Italic*, CAPS, and Size
+Recommendations:
+
+- Use boldface text to point out job titles or degrees--things your want to **pop**.
+- Use italicised text to *hide the less important details*, such as the location of a university or employer.
+- Use ALL CAPS very sparingly--maybe once in the whole resume--to mark section headings or perhaps your name.
+- Don't change the font size unless someone threatens your life.
+
+
+
+## Rhetoric
+
+> Rhetoric: Persuasive language to convince someone to think or act differently.
+
+We are convincing someone to change their mind from "I'll throw out this resume" to "I should take a look at this resume". Have multiple people look at your resume from a distance (I often write a resume, and then hold it 5-6 feet away from someone and ask them what they think.) You want your resume to send the clear message "HIRE ME" even before they read the first word.
+
+
 
 
 *******************************************************************************
@@ -103,9 +170,19 @@ What if you don't have a lot of relevant work experience? In this case, tell the
 
 
 ### Education
-At the early stages of your career, this section should be the most important after the Professional Summary. If you don't have many degrees to include, include lines highlighting the projects you worked on and your achievements.
+At the early stages of your career, this section should be the most important after the Professional Summary. If you don't have many degrees to include, include lines highlighting the projects you worked on and your achievements. As you gain work experience, this section will grow less and less important. 
 
-As you gain work experience, this section will grow less and less important. 
+Text Example:
+
+> **BS, Mathematics**  
+> *University of West Florida                    2011*  
+> 
+> - Honors Thesis: "On University Campus Parking Shortages"
+> - *Summa Cum Laude*
+> - Kugelman Honors *Techne* Scholar
+> - President of $\Pi\text{ME}$ Mathematics Honors Society
+
+
 
 
 #### Early Career Example
@@ -116,7 +193,7 @@ At this point, you have only recently graduated, or have not yet graduated. You 
 > 
 
 #### 5+ Year Experience Example
-Once you have put in 5-10 years of work, let your work speak for itself. 
+Once you have put in 5-10 years of work, let your work speak for itself. Your education at this point is just to prove you belong in the room. You don't need to elaborate at all.
 
 > 
 > ![](figs/resume_ed_section_10_year_experience.png)
@@ -124,7 +201,18 @@ Once you have put in 5-10 years of work, let your work speak for itself.
 
 
 ### Work Experience
-At the early stages of your career, this section will often be rather sparse. Simply mention the jobs you have held and for which companies you worked. Once you have a year of work experience, add bullets under each __title__ you have had to explain the results you achieved in that role. 
+At the early stages of your career, this section will often be rather sparse. Simply mention the jobs you have held and for which companies you worked. Once you have a year of work experience, add bullets under each __title__ you have had to explain the results you achieved in that role. When writing these bullets, make sure they are short, powerful, and to-the-point.
+
+Text Example:
+
+> **Project Manager**  
+> *Epic Systems Corporation, Verona, WI                    2011-2012*
+> 
+> - Supervised 8-person software install team 
+> - Managed 1.3M (USD) install budget
+> - Repeatedly awarded for client-relations excellence
+
+Photo Example:
 
 > 
 > ![](https://cdn-images.zety.com/pages/work_experience_on_resume_example.jpg)

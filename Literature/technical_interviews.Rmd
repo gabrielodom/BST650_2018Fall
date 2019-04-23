@@ -1,0 +1,93 @@
+---
+title: "Nailing the Interview"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "April 23, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+These tips are taken from
+
+- https://learntocodewith.me/posts/technical-interview/
+- https://alyaabbott.wordpress.com/2014/10/01/how-to-ace-a-data-science-interview/
+
+
+
+## Preparing for the Interview
+
+- **Learn as much about the company as possible**.
+- Take notes:
+    + Write down questions for people ahead of time.
+    + Write down stories that showcase your skills.
+    + Write down answers to commonly-asked questions.
+- Find current employees on LinkedIn
+- Print a few copies of your resume
+- Practice sketching pseudocode on paper
+- $\gamma\nu\overset{\sim}{\omega}\theta\iota\ \ \sigma\varepsilon\alpha\upsilon\tau\omicron\nu$; *temet nosce*; "**know yourself**"
+    + know your strengths --- what do you bring to the company?
+    + know your weaknesses --- where can you grow? what have you done about it?
+    + know your story --- *why* do you do what you do?
+    + know your vision ---  where do you see yourself in 2 years, 5 years, and 10 years?
+    + know your goals --- how does working at this company further you along the path above?
+- The Elevator Story: have a 30-60 second answer of "tell me about yourself" **memorized**. Practice it in the mirror.
+- Brush up on common statistics and data science questions.
+- Be prepared to talk about how the work you did in your projects is relevant to a problem that company is currently solving. Tell this story to your friends and family; the best audience is smart people who aren't experts in your field.
+- Practice, practice, practice! Go to interviews for companies you don't care about, just to keep your skills sharp.
+
+
+## The Phone Interview
+
+- If HR calls you: show excitement, soft skills, and agreement with company philosophy here
+- If a scientist/engineer calls you: show off your technical ability
+- Impress them with your knowledge of their lab/company and how you fit their long-term and short-term goals
+- Tell lots of stories: use projects in your own life to answer the questions. Your greatest strenth may be tenacity: tell them the story of when you didn't give up in the face of incredible difficuly. Your greatest weakness may be your communication: tell them how you have worked to mitigate this.
+- The phone interview is a quick way to screen out people who:
+    1) don't care about that specific job. They will ask you some questions with easy answers if you have Googled their company/lab
+    2) can't communicate. You will be on the phone, so how well you can convey your ideas and passion over a call will determine if you get a call back
+    3) aren't interested in statistics /data science. Use the phone interview to sell them on the fact that you actually care about this field, and that you aren't just in it for money.
+
+
+## Take-home Analysis Challenge
+
+- Prove that you can do what you claim on your resume
+- Go above and beyond --- this is your chance to show off
+- For short turnaround times, it's more important that you have an outline of your whole plan than a perfect piece of code for a small piece
+- For long turnaround times, show off your communication skills by writing a beautiful report with code, documentation, and output.
+- DO NOT CHEAT/GET SERIOUS HELP FROM ANYONE ELSE. During the in-person interview, they *will often* ask you to explain why you did things the way that you did them. There is never only one way to solve a problem, so be prepared to justify why you did what you did. You can't answer "because StackExchange / my professor said so".
+- Include pseudocode for error-handling and input checks, but don't write the code for it
+- Test, test, test your code. If possible, include a compiled Rmarkdown document or SAS report showing the output of your code as well.
+
+
+## In-person Interview
+
+- Expect multiple interviews:
+    + "culture" interview from HR. Play up soft skills. HR cares if you are going to be easy to get along with and if you share the values of the company.
+    + "technical" interview from an engineer / scientist. Talk about your collaboration and teamwork, but show your techincal skills. Technical people care about your ability to communicate with them and produce quality work.
+    + "vision" interview with a director / executive. Know what the main goals of the company are, and talk about how you fit in with them. Executives want to know if you will make them money.
+-  Make small-talk.
+
+> I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel. - Maya Angelou
+
+- Be able to tell people quickly who you are and why you are qualified to work with them / for them
+- "Whiteboard Challenge":
+    + Expect a few of the technical employees to ask you to solve a problem in person at a whiteboard.
+    + Problems are often in the form of statistical consulting questions (example scenario + data structure; next steps?), pure statistics questions (e.g. derive the OLS estimator for $\beta$), or software questions (sketch the pseudocode for a simulation study)
+    + Repeat their question back to them, and then rephrase it in your own words. Make sure you start the problem headed in the right direction.
+    + Talk through your thought process. This give you two benefits: 1) partial credit if you get stuck (or hints), and 2) you "show" your ability to communicate what you are doing and why.
+    + Review your work to make sure you've answered as much of their question as you know how. Catch your own mistakes --- don't think it's better if they don't notice.
+    + Slow down. Give yourself time to think about their question, and time to outline the thought process behind your answer. Getting the right answer isn't the point of their question---they knew the answer already! They care about **how** you got your answer.
+    + You will be asked questions that you don't know the answer to. Fall back to describing your problem-solving process: "I don't know how to do that, but this is what I would do to find out..."
+- Take notes:
+    + Taking notes allows you to sneakily refer back to notes you wrote during the interview prep process
+    + Taking notes equips you to write very poignant follow-up emails
+
+
+## Wrap-up
+
+- After the phone interview, send a "thank you" email. Also, you may ask questions about taking a remote analysis challenge.
+- After the on-site interview, send a mass "thank you" email to **all the people who interviewed you**. Mention how comfortable they made you feel, and how excited you are to hear back from them. You can then send personalized emails to the people with whom you think you strongly connected (refer back to your notes).

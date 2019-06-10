@@ -1,0 +1,64 @@
+---
+title: "Interview Questions"
+author: "Gabriel J. Odom, PhD, ThD"
+date: "April 30, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+These are questions we would expect to hear during an interview for a Research Statistician I position.
+
+## Soft Skills
+
+- **About you**:
+    + Tell me about yourself
+    + How are you unique?
+    + How would your best friend describe you?
+- **Motivation**:
+    + Why do you want to work here?
+    + Why should we hire you?
+    + What is interesting to you about this position?
+- **Vision**:
+    + Where do you see yourself in five years?
+    + What are you passionate about?
+    + What are your goals for the future?
+- **Character**:
+    + What are your greatest strengths?
+    + What motivates you?
+    + What are your greatest weaknesses?
+    
+**Do you have any questions?**
+
+**Describe how you have used [SOFT SKILL] via S.T.A.R.** (situation, task, action, result)
+
+
+See this link for more questions and how to answer them:
+
+<https://www.indeed.com/career-advice/interviewing/top-interview-questions-and-answers>
+
+</br>
+
+## Hard Skills
+
+- **Describe a data analysis project you've completed (including workflow).**
+- What are some of the statistical models you know? When would you apply them?
+- **Linear Regression**:
+    + What are the assumptions of linear regression?
+    + How do you check error [multivariate normality, homoskedasticity, stationarity at 0, or independence] / multicollinearity?
+    + What should you do if your data violates the assumption of [ASSUMPTION]?
+- **Association Tests**:
+    + means for two normal groups? three+ groups?
+    + counts in 2x2 table?
+    + variances for two normal groups?
+- **Software and Data**:
+    + preferred software/languages for databases? E.g. MS Excel, Access, Redcap, Velos, Hadoop, SQL
+    + preferred software for analyses/queries? E.g. SAS, R, Python, C++, Java, FORTRAN, Stata, SPSS, JMP
+    + reporting / collaborating tools? E.g. Word, PowerPoint, OneNote, LaTeX, Overleaf, Rmarkdown, Shiny, JuPytR noteboks, Trello, GitHub / GitLab, GitHub Issues, SVN
+    + known databases? E.g. SEER data, TCGA data, CPTAC data, GEO data, ACS data, FRED data
+- **Misc**:
+    + How do you deal with outliers?
+    + What is standard error?
+    + What is your experience with time-to-event data?

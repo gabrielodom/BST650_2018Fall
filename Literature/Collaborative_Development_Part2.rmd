@@ -1,0 +1,400 @@
+---
+title: "Collaborative Development of Efficient R Packages"
+subtitle: "Part 2 - Version Control with GitHub"
+author:
+  - "Gabriel J. Odom, PhD, ThD"
+  - <gabriel.odom@med.miami.edu>
+date: "June 5, 2018"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+This is the second part of the "Collaborative R Package Development" lecture. The material I have primarily drawn from is
+
+- Karl Broman's [git/github tutorial](http://kbroman.org/github_tutorial/)
+- GitHub's [Gist Instructions](https://gist.github.com/mindplace/b4b094157d7a3be6afd2c96370d39fad)
+- Software Carpentry's [Version Control with Git](https://swcarpentry.github.io/git-novice/) lession
+- Gillespie and Lovelace: *Efficient R Programming* [chapter 2](https://bookdown.org/csgillespie/efficientR/set-up.html#project-management) (on project setup)
+- The RStudio Support Blog, [*Version Control with Git and SVN*](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN)
+- Chris Free's [RStudio and GitHub for Dummies](https://marine.rutgers.edu/~cfree/rstudio-and-github-for-dummies/) blog post
+
+We will cover organizing your files, the intial setup of your GitHub account, connecting GitHub to a new or existing RStudio project, the "pull" then "commit" then "push" workflow, and how to keep a project change log.
+
+*******************************************************************************
+
+
+</br>
+
+
+# Directory Setup
+I once worked with a statistician who organized all of their work files like so: all the input data for all of his projects in a `data/` directory, all of his code (regardless of language or application) in a `code/` directory, all of his graphs in a `figures/` directory, all of his manuscripts in a `documents/` directory, and so on and so forth. His boss transitioned one of his projects to me, and it was *hell on earth*. I spent weeks trying to find all of the documents scattered throughout his network drive. Don't do that. Personally, I blame the old Windows OS for training people to use "file-type" organization instead of "project" organization.
+
+Also, if you plan to use GitHub with your project (you are reading this, so I assume so...), then your version controlled project and package directories should *not* be in a sync-enabled directory (like a DropBox or Box Sync folder). Unless you are very careful, this will cause havoc with Git. Since you will be using GitHub to back up your projects, there's no need for sync backups anyway. If you absolutely must put a version-controlled directory inside a synced directory, please [unsync](https://www.google.com/search?q=un-sync+a+folder&oq=un-sync+a+folder&aqs=chrome..69i57j0l5.7223j1j7&sourceid=chrome&ie=UTF-8) that folder.
+
+## Project Directory
+Instead, organize your files by project. For non-package projects, these directory names and contents are quite flexible. However, your team should pick a directory design and be consistent with it. Here's an example directory:
+
+![](../screenshots/GitHub_Setup_Project_Directory.PNG)
+
+The project is the Quantitative Science Clinics for the Sylvester Comprehensive Cancer Center, so I have a directory just for that. Within this directory, I have the following folders:
+
+1. **Code** (miscellaneous) or scripts. These are the code scripts to import and clean the data, perform the analysis (or call the functions from your package to do so), tidy the output, create figures and tables, and save the results. Remember, all of these scripts should be related to the current project!
+2. **Package directory** for the project (*optional*). If you created a package (pipeline) to analyze any data of a certain type, the package should be in the directory you use it (unless it's a pipeline you use for many different projects, then it should probably be hosted on GitHub).
+2. Raw and clean **data**. Any input files go in this folder (even if you pre-process them). Unless the point of your project is to simply clean data, then cleaned data is *not* an output!
+3. **Articles, user guides, or manuals** (often for the literature review of the corresponding manuscript). These are the papers, books, articles, etc. you had to read to understand the project. This directory should also include setup documentation from your team. Any written documentation that helped you set up your work or understand your team's work goes here. Also, this is where you save the bibliography files.
+4. Written summaries and **manuscript files** (drafts, LaTeX logs, etc.). When writing a LaTeX manuscript or an .html report, I usually put each draft in its own subfolder. Also, when you write papers, make sure to mark the draft number as the first *two* characters of the file name; e.g. `01-draft_modifiedPCA.tex`, `02-draft_modifiedPCA.tex`. I've often seen that one number isn't enough (only 9 potential drafts). This keeps you from wasting time looking for the latest version.
+5. Project **README**. This should be a simple text file (`.txt`) that explains what the point of the project is, and where to find all of the important files. Also, this document should have the start date of the project, the date of the most recent major revision, and the names and emails of your main collaborators. This way, if you reference a "Mandy" somewhere in your notes or file names, everyone know you're talking about "Amanda from the statistics department".
+6. Figures and tables (**output** files). If your paper has a results section, all that information goes here. Everything that is an "end" of an analysis goes here.
+
+
+## Package Directory
+Unlike the previous section, where the directory names and contents were completely up to you and your team (as long as they made sense and were consistent), a package directory has quite a few [ironclad rules](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Package-subdirectories).
+
+![](../screenshots/GitHub_Setup_Package_Directory.PNG)
+
+- `R/`: this is where all of your (non-testing) **R scripts** live. If you have a bigger package (15+ script files), I recommend organizing your scripts with a type prefix; e.g. `data_OBJECTNAME`, `internal_FUNCTIONNAME`, `external_FUNCTIONNAME`. Also, if your package has just a few major pieces, you can add the a shorthand for the chunk name as the prefix, in order to keep related scripts together alphabetically. Here's an example:
+
+![](../screenshots/GitHub_Setup_Package_R_subdirectory.PNG)
+
+- `man/`: this is where all the **manual** files go. Because I strongly recommend that you document your package with [roxygen](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html) comments, you should not edit---or even create---these files by hand, but rather write their contents in the comment preamble of each of your functions.
+- `data/`: this is where the **example data sets** live. You need these data files to create nice examples. Each data set will have a corresponding documentation script file in the `R/` and `man/` package directories.
+- `inst/`: this directory is where you store things that you want to be available to a potential user, including its most important sub-directory, `extdata`.
+- `vignettes/` (NOT `vignette`): this is where you store the **vignettes for your package**. Even if you only write one, the directory is still plural. The package will not build properly otherwise. Also, I keep my package development notes in this directory, but some people disagree with me on this.
+- `tests/`: this directory is where you store the **testing scripts** for all of the (non-data) scripts in `R/`. I recommend you write a test file for each script file. I also recommend that you name them the exact same name, other than a `test_` prefix (or perhaps suffix).
+- `docs/`: this directory is usually created when you build a package website with `pkgdown`. If not, this directory (or `doc/`) holds additional **documentation** files and is often a subdirectory of the `inst/` folder.
+- `src/`: this is where you store external **sourced scripts** for compiled code, such as for the C, C++, Python, Java, FORTRAN, etc. languages.
+
+*******************************************************************************
+
+
+</br>
+
+
+# R/GitHub Set Up
+First of all, I need to clarify some nomenclature: [git](https://git-scm.com/) is a version control system. [GitHub](https://github.com/) is an open-source web repository that makes for easier use of git, and easier sharing of code / projects. Karl Broman calls GitHub "Facebook for programmers". 
+
+
+## Necessary Software
+First of all, while you *can* use R from its basic IDE (or worse, from the command line), I recommend that beginners use R from the RStudio IDE. There are so many things that this tool makes easier for you. So, you'll need these three things:
+
+1. R (obviously)
+2. [RStudio](https://www.rstudio.com/products/rstudio/download/) (unless you like your work to be extra hard for no reason)
+3. [Git](https://git-scm.com/downloads)
+    a. **Windows**: click the above link
+    b. **MacOS**: included automatically, or attached to the *Command Line Tools* in `Xcode`. Otherwise, download it from the same link above.
+    c. **Linux** (Debian or Ubuntu): `sudo apt-get install git-core`. For the other builds, check the link.
+    d. **Solaris**: [stop using Solaris](https://www.networkworld.com/article/3222707/data-center/the-sun-sets-on-solaris-and-sparc.html).
+
+
+## RStudio Setup
+Now, you have R, RStudio, and Git. Set up your RStudio to cooperate with Git globally by
+
+1. **Tools** > **Global Options...** > **Git/SVN**
+2. Click the box labelled **Enable version control interface for RStudio projects**. Your window should look like this.
+
+![](../screenshots/GitHub_Setup_RStudio_Global_Options.PNG)
+
+3. Click **OK**.
+
+
+## GitHub Setup
+If you don't have a GitHub account, [follow these steps](https://www.wikihow.com/Create-an-Account-on-GitHub) to set up an account. **Use your university email address.** Make sure you verify your email address. Also, most of you should qualify for the [Student Developer Pack](https://education.github.com/pack). Apply for that too (it should only take a few hours---a day tops). It comes with lots of cool stuff, like package checking with [Travis CI](https://docs.travis-ci.com/user/getting-started/).
+
+*******************************************************************************
+
+
+</br>
+
+
+# Connect GitHub to your RStudio Project
+
+Now, you have three options for projects: are you starting a new project, adding Git functionality to an existing project, or downloading a project already on GitHub? We will talk about the first two in some detail. For the third, please see the more advanced topics covered in Broman's chapters on [forking](http://kbroman.org/github_tutorial/pages/fork.html), [branching and merging](http://kbroman.org/github_tutorial/pages/branching.html), and resolving [merge conflicts](http://kbroman.org/github_tutorial/pages/merge_conflicts.html). The easy thing about the first two is that starting a new project is only a few extra steps more than connecting GitHub to a current project.
+
+## Starting a New Project in RStudio
+To start a new project, follow the steps in the images below.
+
+![](../screenshots/GitHub_newproj_01_new_proj_menu.png)
+
+![](../screenshots/GitHub_newproj_02_create_in_new_dir.png)
+![](../screenshots/GitHub_newproj_03_new_proj_opts.png)
+
+At this step, you should choose the type of project you are working on. Let's create a new project for a paper I'm going to write. Because it's going to be a software paper for the `mvMonitoring` package, I'll put it in the same directory I put my other packages.
+
+![](../screenshots/GitHub_newproj_04_create_in_new_dir_path.png)
+
+Notice that I tick the **Create a git repository** button before I check **Create Project**. Now that I've created this project, I only have two files in this directory: the `mvMonitoring_paper.Rproj` file and a `.gitignore` file telling Git not to save the project file.
+
+
+## Existing Project Setup in RStudio
+If you have a directory of files, but haven't created an RStudio Project for this directory, do this first.
+
+1. Go to **File** \> **New Project**
+2. Select the **Existing Directory** option  
+![](../screenshots/create_in_existing_dir.png)
+3. In the **Project Working Directory**, click "Browse" and find the directory with your scripts and data files.  
+![](../screenshots/create_in_existing_dir_path.png)
+4. Click **Create Project**. If you have files in your existing R window that you'd like to keep working on, tick the **Open in new session** box.
+
+### Start with an Open Project
+Now that you have a directory with an existing project, your **Files** pane and **Environment** panes should look something like this. The **Build** tab is applicable to packages, so you may not see it.
+
+![](../screenshots/Git_01_associate_existing_project_panes_before.PNG)
+
+Now we need to make sure that all of your RStudio projects can cooperate with Git. Go to **Tools** \> **Version Control** \> **Project Setup...**
+
+![](../screenshots/Git_02_associate_existing_project.PNG)
+
+In the **Project Options** window, select the **Git/SVN** tab and change the **Version control system:** dial from "None" to "Git". This will trigger two dialogue pop-up boxes: the second box will trigger after you click "Yes" in the **Confirm New Git Repository** pop-up. When this happens, click **Yes** to restart the RStudio IDE.
+
+![](../screenshots/Git_03_associate_existing_project.PNG)
+
+![](../screenshots/Git_04_associate_existing_project.PNG)
+
+### Commit Your Files to Git
+After RStudio restarts, your **Files** pane and **Environment** panes should have changed to look like this. You should now have a new **Git** tab in the **Environment** pane. 
+
+![](../screenshots/Git_05_associate_existing_project_panes_after.PNG)
+
+This **Git** tab should have an empty check box next to every file and sub-directory in your main project directory. This gives you the option to *commit* (store with Git) only the changes you want. You can completely ignore a file by adding its name to the `.gitignore` file.
+
+In the next step, I specify that I want to commit all of the files in this project.
+
+![](../screenshots/Git_06_first_commit.PNG)
+
+Click **Commit**. In the next pop-up window (**RStudio: Review Changes**), you can review the changes to each of the files you've selected. Additions are highlighted in green, while deletions are highlighted in red. If you have a very large file with only a few changes, this window will show you subsets of the file near the recorded modifications. Write a **Commit message** to keep track of the main idea behind these changes. Note: because all of the changes are recorded, you shouldn't state what you changed in detail, but a brief overview of what you changed and---especially---*why* you changed it.
+
+![](../screenshots/Git_07_review_changes.PNG)
+
+Click **Commit** again. Unless you have a *very good reason*, you should **never** tick the "Amend previous commit" box. If you have to ask if you have a good enough reason, *you don't have a good enough reason*. The **Git Commit** window will then pop up to tell you the details of your commit. If any errors happen, their messages will be displayed in this window.
+
+![](../screenshots/Git_08_first_commit_message.PNG)
+
+Your changes are now saved! Close the two windows.
+
+### The Terminal
+Let's check the status of our Git repository. To do this, got to the **Console** pane and click on the **Terminal** tab. If you don't have a **Terminal** tab, start one by going to **Tools** \> **Terminal** \> **New Terminal** (or by pressing `Alt` + `Shift` + `R` on Windows or MacOS). At the prompt, type `git status` and press `Enter`. You should see a message similar to the one below. You do not want to see an error.
+
+![](../screenshots/Git_10_terminal_clean_status.PNG)
+
+
+### GitHub Side
+I'm assuming that you already have a GitHub account; if not, [go create one](https://www.wikihow.com/Create-an-Account-on-GitHub). Now, go to your **Profile** page and click the little plus sign at the top right. Select **New repository**.
+
+![](../screenshots/GitHub_existing_project_01_new_repository.PNG)
+
+Name the new repository *the exact same name as the project*. Add a description, and click **Create repository**.
+
+![](../screenshots/GitHub_existing_project_02_create_new_repository.PNG)
+
+**THIS NEXT STEP IS VERY IMPORTANT!!** Leave this window open, note the url in the **Quick setup** field, and go back to RStudio.
+
+![](../screenshots/GitHub_existing_project_03_shell_commands.PNG)
+
+### Back to the Terminal
+**DO YOU STILL HAVE THAT GitHub WINDOW OPEN??** Good. Open the **Terminal** tab of the **Console** pane. At the prompt, type `git remote add origin `, then type the url from the **Quick setup** field. Note: on Windows, you cannot copy and paste in the terminal. On some Unix systems you can, but it uses a different keyboard shortcut. Usually, you just have to type the url by hand. Press `Enter`.
+
+![](../screenshots/GitHub_existing_project_04_terminal_connect.PNG)
+
+Now, you can *push* those changes you committed earlier. Type `git push -u origin master` and press `Enter`. **Adding the `-u` is incredibly important** if you plan to use RStudio to handle the pull, commit, and push work for you. Everything else will work just fine, but you won't have the option to use the buttons in the RStudio IDE.
+
+![](../screenshots/GitHub_existing_project_05_terminal_first_push.PNG)
+
+This sent out all of our work to the `testPackage` repository on GitHub. Let's check what that looks like.
+
+### Back to GitHub
+Go back to the GitHub window you left open and refresh the page. If everything worked, then you should see your new repository, and all the directories and files will be annotated by your first commit message from earlier.
+
+![](../screenshots/GitHub_existing_project_06_view_pushed_commits.PNG)
+
+
+## Download a Project from GitHub
+Even though I said that a large portion of this topic is quite beyond the scope of this lesson, here are some brief points. If I already have a project on GitHub that I would like to download to my computer, then I follow these steps. First, I'll go find the url of the repository I'd like to download and copy the link. Then I follow these steps.
+
+![](../screenshots/GitHub_create_project_from_version_ctrl.PNG)
+
+![](../screenshots/GitHub_choose_Git.PNG)
+
+In the **Clone Git Repository** window, I paste the link I copied just above from GitHub into the **Repository URL:** field. RStudio then automatically populates the **Project directory name:** field with the repository name from GitHub. Once again, this directory should not be in a synced folder on your computer---GitHub is handling that for you.
+
+![](../screenshots/GitHub_clone_repository.PNG)
+
+After you click **Create Project**, then RStudio will begin to download all of the project contents to your local machine. Note that these steps will be different (and perhaps more complicated) if the project is hosted in another user's repository.
+
+*******************************************************************************
+
+
+</br> 
+
+
+# Typical Usage: Pull, Commit, and Push
+Almost every time, your version-tracking routine should be in the following steps:
+
+1. Pull new commits from GitHub to your local directory.
+2. Make changes.
+3. Commit your changes.
+4. If necessary, resolve conflicts.
+5. Push your changes back to GitHub.
+
+Recall my `testPackage` repository I had pushed to GitHub.
+
+![](../screenshots/GitHub_existing_project_06_view_pushed_commits.PNG)
+
+I decide that this project needs a README file, so I click the **Add a README** button, and write a brief message to myself and any other users.
+
+![](../screenshots/GitHub_pcp_01_add_README.png)
+
+At the bottom of the page, I see GitHub's version of RStudio's "Review Changes" window:
+
+![](../screenshots/GitHub_pcp_02_commit_window.png)
+
+Write a commit message, just like before, and click **Commit new file**.
+
+![](../screenshots/GitHub_pcp_03_commit_message.png)
+
+The repository page on GitHub comes back, but this time with a few changes:
+
+1. The *latest commit* message (in the blue ribbon at the top of the directory) has changed from "First Commit. Hello Git!" to "Added a README file from GitHub".
+2. The time stamp of the latest commit changed too.
+3. The README.md file was added to the directory, and its commit message and time stamp are different from the other files.
+4. The README that I wrote is displayed on the package repository home page.
+
+![](../screenshots/GitHub_pcp_04_new_home_page.png)
+
+
+## Pull New Changes
+However, look at my package directory on my local machine. The README.md file isn't there.
+
+![](../screenshots/GitHub_pcp_05_local_dir_before_pull.png)
+
+In order to update the state of my local files to match the state of the files on GitHub, I need to *pull* the changes to my local machine. **THIS NEXT STATEMENT IS VERY IMPORTANT: GitHub gives priority to changes that have been *committed* over uncommitted changes on your local machine.** This means that you should *always pull first*. My common practice on collaborative projects is to pull changes every morning, work for a few hours, commit my updates, pull again to catch any new changes, then push my changes to GitHub. I will repeat this *pull* \> *work* \> *commit* \> *push* dance 2-3 times during the day.
+
+Because I know there are new files in my repository on GitHub that I don't have on my local machine, I *pull* these changes.
+
+![](../screenshots/GitHub_pcp_06_the_pull_button.png)
+
+Git informs me of which files have been changed. This message tells me that the README.md file was changed: it went from 0 lines (an empty file) to 4 lines. Then, this message gives me a summary of the changes: the README.md file was "created".
+
+![](../screenshots/GitHub_pcp_07_pull_message.png)
+
+After I've read through the changes, I close the window. I now see the README.md file in my package working directory.
+
+![](../screenshots/GitHub_pcp_08_pack_dir_after_pull.png)
+
+## Commit your Changes
+We probably need a little more in the README, so I'll edit that file.
+
+![](../screenshots/GitHub_pcp_09_edit_README.png)
+
+After you've made the changes you want, you can preview the changes with the **Preview** button. If you make edits to a function, I recommend that you always test your code or package before committing and pushing your changes to GitHub. As much as possible, you want the code you have on GitHub to be error-free. This means that you should try to make edits to a package or pipeline one small piece at a time, so that each change you make can be thoroughly checked. Of course, there are time where this isn't possible, but you should consider this a "best practice" advisory.
+
+Save the changes you've made. When you do, the file will appear on the **Git** tab of the **Environment Pane**. Before, the icon next to files was a green box with an "A" in it. This meant that the files were *added*. Now we see a blue box with an "M" in it. This means the file has been *modified*.
+
+![](../screenshots/GitHub_pcp_10_git_pane.png)
+
+When you are confident that the changes you have made are correct, select the files you wish to commit.
+
+![](../screenshots/GitHub_pcp_10_git_pane2.png)
+
+Click the **Commit** button. The **RStudio: Review Changes** window pops up. The top left panel shows the files you've chosen to commit to Git. The bottom panel shows the changes for the selected file. Additions are in shaded in green; deletions are shaded in red. The top right panel shows the commit message I wrote for these edits. Click **Commit**.
+
+![](../screenshots/GitHub_pcp_11_review_changes.png)
+
+After committing these changes, Git informs you an overview of what you changed. Also, Git now tells you "Your branch is ahead of 'origin/master' by 1 commit". This is there to remind you that---while your changes are committed---they aren't on GitHub yet. Close these two windows.
+
+![](../screenshots/GitHub_pcp_12_branch_ahead.png)
+
+## Push your Changes
+Now that you've made your edits and checked that they all work, it's probably been a few hours. It's conceivable that one of your collaborators has pushed some changes out to your repository on GitHub. Before we push our edits, we should click **Pull** again to check for any new changes.
+
+![](../screenshots/GitHub_pcp_13_check_branch.png)
+
+We have no changes to worry about being overwritten. **Note: this is why I recommend that you write each function in its own script. This way, many people can collaborate on different pieces of a project without accidentally overwriting changes or constantly having to merge changes to the same file.** We can push our changes now, then close the pop-up window. Our changes have been successfully stored on GitHub.
+
+![](../screenshots/GitHub_pcp_14_push.png)
+
+*******************************************************************************
+
+
+</br>
+
+
+# Documenting Project Changes
+One of my colleagues credits audit trails as the primal form of software documentation. In these trails, people would leave messages in the project file answering these four questions:
+
+1. What is the change?
+2. Who is making this change?
+3. When did they make this change?
+4. Why did they make this change?
+
+These are the topics that should be included in **every commit message**. We will cover each with some detail pertaining to development with RStudio and GitHub.
+
+As an aside, this section will not even scratch the surface of true software project documentation. That topic dives farther into project management than I am comfortable covering. However, the [IEEE Standard for Software Project Management Plans](http://sce2.umkc.edu/BIT/burrise/pl/appendix/Software_Documentation_Templates/IEEEProjPlan.pdf) covers this topic with excruciating detail. If you are very interested in developing these skills, [Coursera](https://www.coursera.org/specializations/product-management) and [Pluralsight](https://www.pluralsight.com/courses/technical-writing-software-documentation) both offer courses on software project organization and documentation.
+
+## The Old Changelog System
+The good news for us is: RStudio and Git handle three of the four main questions automatically. You should keep track of the "before-and-after" of each change your team makes anywhere in the project. If you had to do this by hand, you might have a change log entry that says
+
+> User `@steve_k` changed lines 114-117 of file `such_and_such.R` from "blah blah blah" to "bippity boppity boo" on 20161121 at 1806 hours. End user requested this enhancement via support request #233 on 20161108. This closes #233.
+
+Looks exhausting, right? Let's break down this fictional changelog entry.
+
+## What
+The **What** of this entry is twofold
+
+> changed lines 114-117 of file `such_and_such.R` from "blah blah blah" to "bippity boppity boo"
+
+> This closes #233.
+
+We see that a change was made, rather than an addition or deletion. We see which lines were changed and from which file. We see what those lines said before the change, and what they said after. For us, all of these "what" questions are answered automatically by Git. Remember the red and green highlighted lines when we committed a file? That is the answer to the questions of "what did the file say before?" and "what did the file say after?" without us putting in any extra work.
+
+The second point is to the other developers that issue number 233 has been solved. GitHub is very smart about closing issues. If you have an issue ticket [logged through GitHub](https://help.github.com/articles/creating-an-issue/), you can use your commit message to close the pertinant issue ticket with the `closes #<TICKET NUMBER>` syntax.
+
+## Who
+The **Who** of this entry is
+
+> User `@steve_k`
+
+We know who this person is, and we can track them down if their change was innapropriate, documented poorly, or broke the code somewhere downstream. This is handled through the GitHub account you created. I can go through all of the commits that `@steve_k` made to this repository. For any software "crimes", this account is your digital fingerprint. 
+
+## When
+The **When** of this entry is
+
+> on 20161121 at 1806 hours
+
+Once again, recall our repository on GitHub: all of the commits we made were time-stamped. I can go back through my projects and find out exactly when I made a certain change, or when the last time my colleague Steve made a change to his part of the project.
+
+## Why
+The **Why** of this entry is
+
+> End user requested this enhancement via support request #233
+
+When documenting changes with Git, the *why* is the most important piece. This is because the *what*, *who*, and *when* are documented automatically. Just like code comments should describe *why* you have written a function in a certain way---rather than *what* you wrote, change commit messages should also answer *why*. Make sure that your commit message is consise. If you find that you need a lot of documentation to explain why you made a change, then write this paragraph in a development notes file, and reference the section of that file in your commit message: "see `dev_notes.txt` section 2.1.1 for commit notes".
+
+After changing to modern commit messages, the original message can be simplified from
+
+> User `@steve_k` changed lines 114-117 of file `such_and_such.R` from "blah blah blah" to "bippity boppity boo" on 20161121 at 1806 hours. End user requested this enhancement via support request #233 on 20161108. This closes #233.
+
+to
+
+> Completed end user enhancement request. Closes #233.
+
+The **what**, **who**, and **when** is recorded automatically. This is much simpler!
+
+
+
+
+*******************************************************************************
+
+
+</br>
+
+
+# Conclusion
+Between the last lesson and this lession, I hope that you have a much better appreciation for how much time and thought should go in to *organizing* a project before you and your team ever write your first function. We have covered in this lesson an overview of directory organiation (applicable to both shared directories and version-controlled projects). We covered some of the basics of connecting RStudio to GitHub, as well as some of the main actions to version-control your projects and packages. Finally, we briefly discussed the four main questions to answer at every major and minor implementation step: what, who, when, and why---and how Git helps us answer those questions with relative ease.
